@@ -1,0 +1,58 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+@import "tailwindcss";
+
+@theme {
+  --font-poppins: "Poppins", sans-serif;
+  --color-primary: #112948;
+  --color-secondary: #a8bdd7;
+  --color-thirdary: #718bab;
+}
+
+.font-outline-1 {
+  -webkit-text-stroke-width: 3px;
+  -webkit-text-stroke-color: #153969;
+}
+
+.font-outline-2 {
+  -webkit-text-stroke-width: 3px;
+  -webkit-text-stroke-color: #718bab;
+}
+
+.side-bar-shadow {
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.15);
+}
+
+.header-shadow {
+  box-shadow: 6px 2px 5px rgba(0, 0, 0, 0.15);
+}
+
+/* Custom scrollbar for WebKit browsers */
+.scrollable {
+  overflow-x: scroll; /* Enable horizontal scrolling */
+  width: 100%; /* Set a width for the container */
+  cursor: pointer;
+}
+
+.scrollable::-webkit-scrollbar {
+  width: 12px; /* Width of the scrollbar */
+  height: 8px; /* Height of the scrollbar */
+}
+
+.scrollable::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Background of the scrollbar track */
+}
+
+.scrollable::-webkit-scrollbar-thumb {
+  background: #153969; /* Color of the scrollbar thumb */
+  border-radius: 10px; /* Rounded corners for the thumb */
+}
+
+.scrollable::-webkit-scrollbar-thumb:hover {
+  background: #718bab; /* Color of the thumb on hover */
+}
+
+input:-webkit-autofill {
+  font-family: "Poppins", sans-serif;
+  -webkit-box-shadow: 0 0 0 30px #718bab inset !important; /* Background color */
+  -webkit-text-fill-color: white !important; /* Text color */
+}
