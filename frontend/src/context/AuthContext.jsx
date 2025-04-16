@@ -9,6 +9,7 @@ export default function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [authenticated, setAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [signupStatus, setSignupStatus] = useState(false);
   const navigate = useNavigate();
 
   const checkAuth = async () => {
@@ -60,7 +61,8 @@ export default function AuthProvider({ children }) {
       setAuthenticated(true);
       navigate("/home");
     } else {
-      alert("Login failed. Please check your credentials.");
+      navigate("/signin/status");
+      // alert("Login failed. Please check your credentials.");
     }
   };
 
@@ -73,6 +75,8 @@ export default function AuthProvider({ children }) {
         login_user,
         setUser,
         setAuthenticated,
+        signupStatus,
+        setSignupStatus,
       }}
     >
       {children}

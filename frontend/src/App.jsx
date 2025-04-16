@@ -10,6 +10,7 @@ import MessagePage from "./pages/message";
 import BuyPage from "./pages/buy";
 import SellPage from "./pages/sell";
 import SignupStatus from "./pages/signupstatus";
+import SigninStatus from "./pages/signinstatus";
 import ProtectedRoute from "./route/ProtectedRoute.jsx";
 
 function App() {
@@ -61,6 +62,7 @@ function App() {
           }
         />
         <Route path={"/signup/status"} element={<SignupStatus />} />
+        <Route path={"/signin/status"} element={<SigninStatus />} />
       </Routes>
     </>
   );

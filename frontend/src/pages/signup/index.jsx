@@ -1,8 +1,12 @@
 import { data, Link, useNavigate } from "react-router-dom";
 import googlePNG from "./../../assets/google.png";
 import { useEffect, useState } from "react";
+import { useAuth } from "../../context/AuthContext";
 
 export default function SignupPage() {
+  const { signupStatus, setSignupStatus } = useAuth();
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -16,8 +20,6 @@ export default function SignupPage() {
       [name]: value,
     }));
   }
-
-  const navigate = useNavigate();
 
   async function handleSubmit(event) {
     event.preventDefault();
@@ -34,15 +36,20 @@ export default function SignupPage() {
         requestOptions,
       );
       const data = await response.json();
-      console.log(data);
-
       setFormData({
         username: "",
         email: "",
         password: "",
       });
 
-      navigate("/signup/status");
+      console.log(data);
+
+      if (typeof data.username === "string") {
+        setSignupStatus(true);
+        navigate("/signup/status");
+      } else {
+        navigate("/signup/status", { state: data });
+      }
     } catch (error) {
       console.error("Error during fetch:", error);
     }
