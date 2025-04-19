@@ -8,6 +8,10 @@
   --color-thirdary: #718bab;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 .font-outline-1 {
   -webkit-text-stroke-width: 3px;
   -webkit-text-stroke-color: #153969;

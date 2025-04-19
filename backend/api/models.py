@@ -35,7 +35,7 @@ class Product(models.Model):
         related_name='purchased_products'
     )
     
-    image = models.ImageField(upload_to='product_images/', blank=True, null=True)
+    image = models.ImageField(upload_to='product_images/', default='product_images/No Product Image.svg')
     
     def __str__(self):
         return self.name

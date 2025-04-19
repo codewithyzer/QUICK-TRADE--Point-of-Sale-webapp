@@ -18,6 +18,8 @@ from .serializers import UserSerializer
 
 from rest_framework.generics import ListCreateAPIView
 
+from rest_framework.views import APIView
+
 from .models import Product
 from .serializers import ProductSerializer
 
@@ -104,9 +106,29 @@ def authenticated(request):
     return Response({'authenticated': True, 'user': serializer.data})
 
 class ProductListCreateAPIView(ListCreateAPIView):
-    queryset = Product.objects.all()
     serializer_class = ProductSerializer
     permission_classes = [IsAuthenticated]
+    
+    def get_queryset(self):
+        queryset = Product.objects.all()
+        
+        category_name = self.request.query_params.get('category')
+        if category_name:
+            queryset = queryset.filter(category__name__icontains=category_name)
+        
+        name = self.request.query_params.get('name')
+        if name:
+            queryset = queryset.filter(name__icontains=name)
+            
+        owned = self.request.query_params.get('owned') == 'true'
+        if owned:
+            queryset = queryset.filter(owner=self.request.user)
+            
+        exclude = self.request.query_params.get('exclude_owner') == 'true'
+        if exclude:
+            queryset = queryset.exclude(owner=self.request.user)
+        
+        return queryset
     
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
