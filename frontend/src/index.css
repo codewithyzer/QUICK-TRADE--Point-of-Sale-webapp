@@ -34,7 +34,6 @@
 .scrollable {
   overflow-x: scroll; /* Enable horizontal scrolling */
   width: 100%; /* Set a width for the container */
-  cursor: pointer;
 }
 
 .scrollable::-webkit-scrollbar {

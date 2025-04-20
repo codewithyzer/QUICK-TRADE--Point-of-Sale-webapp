@@ -46,3 +46,10 @@ export const refresh_token = async () => {
     throw err;
   }
 };
+
+export async function get_products(urlParams) {
+  const res = await axios.get(`${BASE_URL}products/?${urlParams}`, {
+    withCredentials: true,
+  });
+  return res.data;
+}

@@ -11,17 +11,18 @@ from rest_framework.response import Response
 from rest_framework import status
 
 from rest_framework.decorators import api_view, permission_classes
-
 from rest_framework.permissions import IsAuthenticated
 
-from .serializers import UserSerializer
-
 from rest_framework.generics import ListCreateAPIView
-
 from rest_framework.views import APIView
+
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.filters import SearchFilter, OrderingFilter
 
 from .models import Product
 from .serializers import ProductSerializer
+from .serializers import UserSerializer
+from .filters import ProductFilter
 
 
 # Create your views here.
@@ -106,29 +107,11 @@ def authenticated(request):
     return Response({'authenticated': True, 'user': serializer.data})
 
 class ProductListCreateAPIView(ListCreateAPIView):
+    queryset = Product.objects.all()
     serializer_class = ProductSerializer
     permission_classes = [IsAuthenticated]
-    
-    def get_queryset(self):
-        queryset = Product.objects.all()
-        
-        category_name = self.request.query_params.get('category')
-        if category_name:
-            queryset = queryset.filter(category__name__icontains=category_name)
-        
-        name = self.request.query_params.get('name')
-        if name:
-            queryset = queryset.filter(name__icontains=name)
-            
-        owned = self.request.query_params.get('owned') == 'true'
-        if owned:
-            queryset = queryset.filter(owner=self.request.user)
-            
-        exclude = self.request.query_params.get('exclude_owner') == 'true'
-        if exclude:
-            queryset = queryset.exclude(owner=self.request.user)
-        
-        return queryset
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = ProductFilter
     
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
