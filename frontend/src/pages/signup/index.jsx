@@ -56,7 +56,7 @@ export default function SignupPage() {
   }
 
   const inputStyle =
-    "font-poppins text-[0.8rem] w-[97%] outline-0 border-solid border-[2px] border-white bg-[#718bab] text-white p-[7px] pl-[10px] rounded-[5px]";
+    "input-one font-poppins text-[0.8rem] w-[97%] outline-0 border-solid border-[2px] border-white bg-[#718bab] text-white p-[7px] pl-[10px] rounded-[5px]";
 
   const labelStyle = "font-poppins text-[0.9rem] mt-[5px]";
 

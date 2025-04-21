@@ -1,31 +1,25 @@
 import defaultProductImage from "../assets/No Product Image.svg";
 
-export default function LargeCard() {
+export default function LargeCard(props) {
   return (
-    <div className="border-primary flex h-70 w-120 flex-col overflow-hidden rounded-xl border-1 bg-white shadow-md transition-all duration-50">
-      <div className="bg-thirdary flex h-4/5 w-full items-center justify-center">
+    <div className="border-primary flex max-h-90 min-h-75 max-w-120 min-w-100 cursor-pointer flex-col overflow-hidden rounded-xl border-1 bg-white shadow-md transition-all duration-50">
+      <div className="flex h-4/5 w-full items-center justify-center bg-white">
         <img
-          src={defaultProductImage}
+          src={props.image}
           alt="default product image"
           className="w-full object-contain"
         />
       </div>
       <div className="flex h-1/5 w-full border-t-1 bg-white">
-        <div className="flex flex-col justify-center pl-4 text-sm">
-          <p className="text-primary font-medium">
-            Name: <span className="font-normal">Laptop</span>
-          </p>
-          <p className="text-primary font-medium">
-            Price: <span className="font-normal">199.00</span>
+        <div className="flex items-center gap-2 pl-4 text-[0.65rem]">
+          <p className="text-primary text-[0.9rem] font-medium">
+            {props.name.length > 35
+              ? `${props.name.slice(0, 35)}...`
+              : props.name}
           </p>
         </div>
-        <div className="ml-auto flex items-center gap-3 pr-4">
-          <button className="bg-thirdary hover:bg-primary cursor-pointer justify-self-end rounded-md px-4 py-0.5 font-medium text-white transition-all duration-200">
-            View
-          </button>
-          <button className="bg-thirdary hover:bg-primary cursor-pointer justify-self-end rounded-md px-4 py-0.5 font-medium text-white transition-all duration-200">
-            Buy
-          </button>
+        <div className="ml-auto flex items-center gap-2 pr-2.5">
+          <p className="text-primary text-lg font-bold">₱{props.price}</p>
         </div>
       </div>
     </div>

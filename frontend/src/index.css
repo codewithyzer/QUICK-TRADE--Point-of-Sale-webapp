@@ -54,8 +54,37 @@
   background: #718bab; /* Color of the thumb on hover */
 }
 
-input:-webkit-autofill {
+.scrollable-h {
+  overflow-y: scroll; /* Enable horizontal scrolling */
+  width: 100%; /* Set a width for the container */
+}
+
+.scrollable-h::-webkit-scrollbar {
+  width: 8px; /* Width of the scrollbar */
+  height: 8px; /* Height of the scrollbar */
+}
+
+.scrollable-h::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Background of the scrollbar track */
+}
+
+.scrollable-h::-webkit-scrollbar-thumb {
+  background: #153969; /* Color of the scrollbar thumb */
+  border-radius: 10px; /* Rounded corners for the thumb */
+}
+
+.scrollable-h::-webkit-scrollbar-thumb:hover {
+  background: #718bab; /* Color of the thumb on hover */
+}
+
+.input-one:-webkit-autofill {
   font-family: "Poppins", sans-serif;
   -webkit-box-shadow: 0 0 0 30px #718bab inset !important; /* Background color */
   -webkit-text-fill-color: white !important; /* Text color */
+}
+
+.input-two:-webkit-autofill {
+  font-family: "Poppins", sans-serif;
+  -webkit-box-shadow: 0 0 0 30px white inset !important; /* Background color */
+  -webkit-text-fill-color: #112948 !important; /* Text color */
 }

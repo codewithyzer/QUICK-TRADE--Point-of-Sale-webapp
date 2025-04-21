@@ -4,6 +4,8 @@ const LOGIN_URL = `${BASE_URL}token/`;
 const LOGOUT_URL = `${BASE_URL}logout/`;
 const REFRESH_URL = `${BASE_URL}token/refresh/`;
 const AUTHENTICATED_URL = `${BASE_URL}authenticated/`;
+const GET_PRODUCTS_URL = `${BASE_URL}products/?`;
+const POST_PRODUCTS_URL = `${BASE_URL}products/`;
 
 export async function login(username, password) {
   const response = await axios.post(
@@ -48,8 +50,39 @@ export const refresh_token = async () => {
 };
 
 export async function get_products(urlParams) {
-  const res = await axios.get(`${BASE_URL}products/?${urlParams}`, {
+  const res = await axios.get(`${GET_PRODUCTS_URL}${urlParams}`, {
     withCredentials: true,
   });
   return res.data;
+}
+
+export async function new_product(
+  nameParam,
+  priceParam,
+  categoryParam,
+  rfsParam,
+  imageParam,
+) {
+  try {
+    const res = await axios.post(
+      POST_PRODUCTS_URL,
+      {
+        name: nameParam,
+        price: priceParam,
+        rfs: rfsParam,
+        category_id: categoryParam,
+        in_stock: true,
+        image: imageParam,
+      },
+      {
+        withCredentials: true,
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      },
+    );
+    return res.data;
+  } catch (error) {
+    console.error(error);
+  }
 }
