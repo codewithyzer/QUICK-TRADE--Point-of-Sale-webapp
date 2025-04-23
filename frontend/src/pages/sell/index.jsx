@@ -8,6 +8,7 @@ import { get_products } from "../../endpoints/api.js";
 import LargeCard from "../../components/LargeCard.jsx";
 import ImageUpload from "../../components/ImageUpload.jsx";
 import { new_product } from "../../endpoints/api.js";
+import Guidline from "./components/Guidline.jsx";
 
 export default function SellPage() {
   const { user } = useAuth();
@@ -76,7 +77,6 @@ export default function SellPage() {
       newProduct.productRFS,
       newProduct.productImage,
     );
-    console.log(data);
     setNewProduct({
       productImage: "",
       productName: "",
@@ -84,6 +84,7 @@ export default function SellPage() {
       productRFS: "",
       productCategory: "",
     });
+    setPreview(null);
   };
 
   console.log(newProduct);
@@ -131,6 +132,9 @@ export default function SellPage() {
                 className="hidden"
               />
             </div>
+            <p className="text-thirdary text-[0.9rem] font-medium">
+              Product details<i class="fa-solid fa-circle-info ml-1"></i>
+            </p>
             <div className="flex flex-col gap-4">
               <div className="flex flex-col gap-2">
                 <label
@@ -207,6 +211,7 @@ export default function SellPage() {
                 </select>
               </div>
             </div>
+            <Guidline />
             <button className="bg-thirdary hover:bg-primary cursor-pointer rounded-lg py-3 font-medium text-white transition-all duration-200">
               Upload Product
             </button>
@@ -229,6 +234,7 @@ export default function SellPage() {
           </div>
         </div>
       </main>
+      <div></div>
     </>
   );
 }
