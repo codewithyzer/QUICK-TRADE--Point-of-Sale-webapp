@@ -2,7 +2,7 @@ import defaultProductImage from "../assets/No Product Image.svg";
 
 export default function SmallCard(props) {
   return (
-    <div className="border-primary relative flex h-60 w-100 shrink-0 cursor-pointer flex-col overflow-hidden rounded-xl border-1 bg-white shadow-sm transition-all duration-50">
+    <div className="hover:border-thirdary relative flex h-60 shrink-0 cursor-pointer flex-col overflow-hidden border-solid bg-white transition-all duration-50 hover:border-1">
       <div className="bg-primary absolute top-2 left-2 rounded-md px-2 py-1 text-xs font-semibold text-white">
         By:{" "}
         <span className="font-normal">
@@ -15,10 +15,10 @@ export default function SmallCard(props) {
         <img
           src={props.image}
           alt="default product image"
-          className="w-full object-contain"
+          className="object-sover w-full"
         />
       </div>
-      <div className="flex h-1/5 w-full border-t-1 bg-white">
+      <div className="flex h-1/5 w-full bg-white">
         <div className="flex items-center gap-2 pl-4 text-[0.65rem]">
           <p className="text-primary text-[0.9rem] font-medium">
             {props.name.length > 35

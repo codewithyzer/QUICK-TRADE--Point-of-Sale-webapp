@@ -88,3 +88,14 @@
   -webkit-box-shadow: 0 0 0 30px white inset !important; /* Background color */
   -webkit-text-fill-color: #112948 !important; /* Text color */
 }
+
+.fade-in {
+  animation: fadeIn 0.25s ease-out forwards;
+  opacity: 0; /* initial state */
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}

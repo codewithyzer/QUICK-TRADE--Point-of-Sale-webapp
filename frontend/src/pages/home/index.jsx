@@ -1,12 +1,10 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import Header from "../../components/Header.jsx";
 import HomeSidebar from "./components/HomeSidebar.jsx";
 import { useAuth } from "../../context/AuthContext";
-import LargeCard from "../../components/LargeCard.jsx";
 import SmallCard from "../../components/SmallCard.jsx";
 import { get_products } from "../../endpoints/api.js";
-import loadingGIF from "../../assets/Dual Ring@1x-1.0s-200px-200px.gif";
+import electronicsPic from "../../assets/Electronics.png";
 
 export default function HomePage() {
   const { user } = useAuth();
@@ -48,30 +46,27 @@ export default function HomePage() {
 
     if (categoryProducts.length > 0) {
       return (
-        <div className="flex cursor-default flex-col gap-3" key={categoryName}>
-          <h1 className="text-primary text-3xl font-semibold">
+        <div
+          className="fade-in flex cursor-default flex-col gap-4"
+          key={categoryName}
+        >
+          <div className="bg-primary rounded-t-md p-5 text-3xl font-semibold text-white">
             {categoryName}
-          </h1>
-          <div
-            className={categoryProducts.length < 3 ? notScrollable : scrollable}
-          >
+          </div>
+          <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3">
             {categoryProducts}
           </div>
         </div>
       );
     } else {
       return (
-        <div className="flex cursor-default flex-col gap-3" key={categoryName}>
-          <h1 className="text-primary text-3xl font-semibold">
+        <div className="flex cursor-default flex-col gap-4" key={categoryName}>
+          <div className="bg-primary rounded-t-md p-5 text-3xl font-semibold text-white">
             {categoryName}
-          </h1>
-          <div className={notScrollable}>
-            <div className="border-primary relative flex h-60 w-100 shrink-0 cursor-default flex-col items-center justify-center overflow-hidden rounded-xl border-1 bg-white shadow-md transition-all duration-50">
-              <img
-                src={loadingGIF}
-                alt="loading gif"
-                className="w-15 object-contain"
-              />
+          </div>
+          <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3">
+            <div className="border-primary relative flex h-60 shrink-0 cursor-default flex-col items-center justify-center overflow-hidden bg-white transition-all duration-50">
+              <p>No product for this category</p>
             </div>
           </div>
         </div>
@@ -83,19 +78,36 @@ export default function HomePage() {
     <>
       <Header user={user} />
       <HomeSidebar />
-      <main className="font-poppins mt-[70px] ml-[284px] p-8">
-        <div className="flex flex-col gap-5">
-          {/* <div className="flex flex-col gap-5">
-            <h1 className="text-3xl font-semibold text-[var(--color-primary)]">
-              For You . . .
-            </h1>
-            <div className="scrollable grid grid-flow-col gap-5 pb-3">
-              <LargeCard />
-              <LargeCard />
-              <LargeCard />
-            </div>
-          </div> */}
-          {categoryCards}
+      <main className="font-poppins mt-[70px] ml-[284px] flex flex-col gap-6 bg-gray-100 p-8">
+        <form
+          action=""
+          className="flex h-8 w-80 items-center justify-end gap-2 self-end"
+        >
+          <div className="z-10 flex flex-col gap-2">
+            <select
+              name="productCategory"
+              className="border-primary text-primary cursor-pointer rounded-lg border-1 px-2 py-1.5 text-[0.8rem] font-semibold shadow-sm outline-none"
+            >
+              <option value="" disabled></option>
+              <option value="1">Electronics</option>
+              <option value="2">Home Appliances</option>
+              <option value="3">Fashion</option>
+              <option value="4">Health & Beauty</option>
+              <option value="5">Furniture</option>
+              <option value="6">Toys & Games</option>
+              <option value="7">Sports & Outdoors</option>
+              <option value="8">Automotive</option>
+              <option value="9">Groceries</option>
+              <option value="10">Book & Media</option>
+            </select>
+          </div>
+          <button className="border-primary text-primary hover:bg-primary h-full cursor-pointer rounded-lg border-1 px-10 text-[0.8rem] font-medium transition-all duration-200 hover:text-white">
+            Filter
+          </button>
+        </form>
+        <div className="flex flex-col gap-15">{categoryCards}</div>
+        <div className="text-thirdary mt-10 text-center text-sm">
+          You've reached the end of this page
         </div>
       </main>
     </>

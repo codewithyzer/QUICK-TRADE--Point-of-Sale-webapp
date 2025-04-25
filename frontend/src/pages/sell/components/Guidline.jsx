@@ -1,6 +1,6 @@
-export default function Guidline() {
+export default function Guidline(props) {
   return (
-    <ul className="text-thirdary font-sm mt-2 mb-2 text-[0.75rem]/5">
+    <ul className="text-thirdary font-sm mt-2 mb-[-0.5rem] text-[0.75rem]/5">
       <h2 className="text-thirdary text-[0.9rem] font-medium">
         <i class="fa-solid fa-bag-shopping"></i> Product Upload Guidelines
       </h2>
@@ -26,6 +26,17 @@ export default function Guidline() {
       <li>
         <i class="fa-solid fa-check mr-1"></i> Make sure all information
         provided is truthful and up-to-date.
+      </li>
+
+      <li>
+        <div className="mt-4.5 flex">
+          <input
+            onChange={props.changeCheckbox}
+            type="checkbox"
+            className="accent-thirdary mr-1"
+          />
+          <p>I have read and accepted the product upload terms & conditions</p>
+        </div>
       </li>
     </ul>
   );

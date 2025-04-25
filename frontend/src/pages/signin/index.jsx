@@ -36,7 +36,7 @@ export default function SigninPage() {
   const labelStyle = "font-poppins text-[0.9rem] mt-[5px]";
 
   return (
-    <main className="mx-auto my-[120px] flex w-fit justify-center rounded-[20px] shadow-md">
+    <main className="fade-in mx-auto my-[120px] flex w-fit justify-center rounded-[20px] shadow-md">
       <div className="flex h-[500px] w-[380px] flex-col items-center justify-center rounded-l-[20px] bg-[#f5f5f5]">
         <h1 className="signup-qt">
           <span className="font-poppins font-outline-1 text-[6rem] font-bold text-white">
@@ -55,7 +55,7 @@ export default function SigninPage() {
           </span>
         </h1>
       </div>
-      <div className="font=[1.3rem] flex h-[500px] w-[380px] flex-col rounded-r-[20px] bg-[#153969] p-[30px] text-white">
+      <div className="flex h-[500px] w-[380px] flex-col rounded-r-[20px] bg-[#153969] p-[30px] font-[1.3rem] text-white">
         <h1 className="font-poppins text-[41.6px] font-bold">Welcome</h1>
         <form className="flex flex-col items-start" onSubmit={handleSubmit}>
           <label htmlFor="username" className="font-poppins mt-5 text-[0.9rem]">

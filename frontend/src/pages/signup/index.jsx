@@ -61,7 +61,7 @@ export default function SignupPage() {
   const labelStyle = "font-poppins text-[0.9rem] mt-[5px]";
 
   return (
-    <main className="mx-auto my-[120px] flex w-fit justify-center rounded-[20px] shadow-md">
+    <main className="fade-in mx-auto my-[120px] flex w-fit justify-center rounded-[20px] shadow-md">
       <div className="flex h-[500px] w-[380px] flex-col items-center justify-center rounded-l-[20px] bg-[#f5f5f5]">
         <h1 className="signup-qt">
           <span className="font-poppins font-outline-1 text-[6rem] font-bold text-white">

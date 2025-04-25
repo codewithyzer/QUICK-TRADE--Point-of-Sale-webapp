@@ -25,6 +25,9 @@ export default function SellPage() {
     productCategory: "",
   });
 
+  const [readGuidlines, setReadGuidlines] = useState(false);
+  const [guidelineError, setGuidlineError] = useState(false);
+
   useEffect(() => {
     async function fetchData() {
       try {
@@ -60,6 +63,10 @@ export default function SellPage() {
     }
   };
 
+  function handleCheckboxChange() {
+    setReadGuidlines((prev) => !prev);
+  }
+
   const handleChange = (event) => {
     const { name, value } = event.currentTarget;
     setNewProduct((prev) => ({
@@ -70,22 +77,28 @@ export default function SellPage() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const data = await new_product(
-      newProduct.productName,
-      newProduct.productPrice,
-      newProduct.productCategory,
-      newProduct.productRFS,
-      newProduct.productImage,
-    );
-    setNewProduct({
-      productImage: "",
-      productName: "",
-      productPrice: "",
-      productRFS: "",
-      productCategory: "",
-    });
-    setPreview(null);
+    if (readGuidlines) {
+      const data = await new_product(
+        newProduct.productName,
+        newProduct.productPrice,
+        newProduct.productCategory,
+        newProduct.productRFS,
+        newProduct.productImage,
+      );
+      setNewProduct({
+        productImage: "",
+        productName: "",
+        productPrice: "",
+        productRFS: "",
+        productCategory: "",
+      });
+      setPreview(null);
+    } else {
+      setGuidlineError(true);
+    }
   };
+
+  function validate() {}
 
   console.log(newProduct);
 
@@ -93,7 +106,7 @@ export default function SellPage() {
     <>
       <Header user={user} />
       <SellSidebar />
-      <main className="font-poppins mt-[70px] ml-[284px] flex gap-10 p-8">
+      <main className="font-poppins mt-[70px] ml-[284px] flex gap-10 bg-gray-100 p-8">
         <div>
           <h1 className="text-primary mb-5 text-3xl font-semibold">
             Upload a product
@@ -103,7 +116,7 @@ export default function SellPage() {
             className="border-primary font-poppins flex w-165 flex-col gap-4"
           >
             <div className="relative">
-              <div className="border-primary flex h-90 w-full flex-col items-center justify-center rounded-xl border-1 border-dashed shadow-sm">
+              <div className="border-primary flex h-90 w-full flex-col items-center justify-center rounded-xl border-1 border-dashed bg-white shadow-sm">
                 {!preview ? (
                   <>
                     <p className="text-gray-400">No Product Image</p>
@@ -148,7 +161,7 @@ export default function SellPage() {
                   type="text"
                   required
                   name="productName"
-                  className="input-two border-primary text-primary rounded-lg border-1 px-2 py-1.5 text-[0.8rem] font-semibold shadow-sm outline-none"
+                  className="input-two border-primary text-primary rounded-lg border-1 bg-white px-2 py-1.5 text-[0.8rem] font-semibold shadow-sm outline-none"
                   onChange={handleChange}
                 />
               </div>
@@ -165,7 +178,7 @@ export default function SellPage() {
                   type="number"
                   required
                   name="productPrice"
-                  className="input-two border-primary text-primary rounded-lg border-1 px-2 py-1.5 text-[0.8rem] font-semibold shadow-sm outline-none"
+                  className="input-two border-primary text-primary rounded-lg border-1 bg-white px-2 py-1.5 text-[0.8rem] font-semibold shadow-sm outline-none"
                 />
               </div>
               <div className="flex flex-col gap-2">
@@ -180,7 +193,7 @@ export default function SellPage() {
                   onChange={handleChange}
                   required
                   name="productRFS"
-                  className="input-two border-primary text-primary max-h-50 min-h-50 rounded-lg border-1 px-2 py-1.5 text-[0.8rem] font-semibold shadow-sm outline-none"
+                  className="input-two border-primary text-primary max-h-50 min-h-50 rounded-lg border-1 bg-white px-2 py-1.5 text-[0.8rem] font-semibold shadow-sm outline-none"
                 />
               </div>
               <div className="z-10 flex flex-col gap-2">
@@ -195,7 +208,7 @@ export default function SellPage() {
                   onChange={handleChange}
                   required
                   name="productCategory"
-                  className="border-primary text-primary rounded-lg border-1 px-2 py-1.5 text-[0.8rem] font-semibold shadow-sm outline-none"
+                  className="border-primary text-primary cursor-pointer rounded-lg border-1 bg-white px-2 py-1.5 text-[0.8rem] font-semibold shadow-sm outline-none"
                 >
                   <option value="" disabled></option>
                   <option value="1">Electronics</option>
@@ -211,7 +224,16 @@ export default function SellPage() {
                 </select>
               </div>
             </div>
-            <Guidline />
+            <Guidline
+              checkboxStatus={readGuidlines}
+              changeCheckbox={handleCheckboxChange}
+            />
+            {guidelineError && (
+              <div className="mt-[-0.4rem] text-[0.75rem] font-medium text-red-400">
+                <i class="fa-solid fa-circle-exclamation"></i> Please make sure
+                you agree to product upload terms and conditions
+              </div>
+            )}
             <button className="bg-thirdary hover:bg-primary cursor-pointer rounded-lg py-3 font-medium text-white transition-all duration-200">
               Upload Product
             </button>
