@@ -60,7 +60,7 @@
 }
 
 .scrollable-h::-webkit-scrollbar {
-  width: 8px; /* Width of the scrollbar */
+  width: 5px; /* Width of the scrollbar */
   height: 8px; /* Height of the scrollbar */
 }
 
@@ -69,12 +69,12 @@
 }
 
 .scrollable-h::-webkit-scrollbar-thumb {
-  background: #153969; /* Color of the scrollbar thumb */
+  background: #718bab; /* Color of the scrollbar thumb */
   border-radius: 10px; /* Rounded corners for the thumb */
 }
 
 .scrollable-h::-webkit-scrollbar-thumb:hover {
-  background: #718bab; /* Color of the thumb on hover */
+  background: #a8bdd7; /* Color of the thumb on hover */
 }
 
 .input-one:-webkit-autofill {
@@ -97,5 +97,16 @@
 @keyframes fadeIn {
   to {
     opacity: 1;
+  }
+}
+
+.fade-out {
+  animation: fadeOut 0.25s ease-out forwards;
+  opacity: 1; /* initial state before fading out */
+}
+
+@keyframes fadeOut {
+  to {
+    opacity: 0;
   }
 }
