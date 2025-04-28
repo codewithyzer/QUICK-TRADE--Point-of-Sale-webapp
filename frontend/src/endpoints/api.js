@@ -5,7 +5,9 @@ const LOGOUT_URL = `${BASE_URL}logout/`;
 const REFRESH_URL = `${BASE_URL}token/refresh/`;
 const AUTHENTICATED_URL = `${BASE_URL}authenticated/`;
 const GET_PRODUCTS_URL = `${BASE_URL}products/?`;
+const GET_PRODUCT_URL = `${BASE_URL}products/`;
 const POST_PRODUCTS_URL = `${BASE_URL}products/`;
+import { useNavigate } from "react-router-dom";
 
 export async function login(username, password) {
   const response = await axios.post(
@@ -84,5 +86,17 @@ export async function new_product(
     return res.data;
   } catch (error) {
     console.error(error);
+  }
+}
+
+export async function retrieveProduct(pk) {
+  try {
+    const res = await axios.get(`${GET_PRODUCT_URL}${pk}/`, {
+      withCredentials: true,
+    });
+    return res.data;
+  } catch (error) {
+    // console.error("Error during fetching data:", error);
+    throw error;
   }
 }

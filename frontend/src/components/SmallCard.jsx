@@ -1,8 +1,16 @@
 import defaultProductImage from "../assets/No Product Image.svg";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function SmallCard(props) {
+  const nav = useNavigate();
+  function handleClick() {
+    nav(`/home/products/${props.id}`);
+  }
   return (
-    <div className="hover:border-thirdary relative flex h-60 shrink-0 cursor-pointer flex-col overflow-hidden rounded-sm border-solid bg-white transition-all duration-50 hover:border-1">
+    <div
+      onClick={handleClick}
+      className="hover:border-thirdary relative flex h-60 shrink-0 cursor-pointer flex-col overflow-hidden rounded-sm border-solid bg-white transition-all duration-50 hover:border-1"
+    >
       <div className="bg-primary absolute top-2 left-2 rounded-md px-2 py-1 text-xs font-semibold text-white">
         By:{" "}
         <span className="font-normal">

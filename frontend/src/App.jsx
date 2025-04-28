@@ -12,6 +12,7 @@ import SellPage from "./pages/sell";
 import SignupStatus from "./pages/signupstatus";
 import SigninStatus from "./pages/signinstatus";
 import ProtectedRoute from "./route/ProtectedRoute.jsx";
+import Product from "./pages/product/index.jsx";
 
 function App() {
   return (
@@ -58,6 +59,14 @@ function App() {
           element={
             <ProtectedRoute>
               <SellPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path={"/home/products/:id"}
+          element={
+            <ProtectedRoute>
+              <Product />
             </ProtectedRoute>
           }
         />
