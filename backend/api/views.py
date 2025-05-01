@@ -19,9 +19,8 @@ from rest_framework.views import APIView
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import SearchFilter, OrderingFilter
 
-from .models import Product
-from .serializers import ProductSerializer
-from .serializers import UserSerializer
+from .models import Product, Cart, CartItem
+from .serializers import ProductSerializer, UserSerializer, CartSerializer, CartItemSerializer
 from .filters import ProductFilter
 
 
@@ -122,3 +121,40 @@ class ProductRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
     permission_classes = [IsAuthenticated]
     filter_backends = [DjangoFilterBackend]
     filterset_class = ProductFilter
+    
+class CartView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        cart, _ = Cart.objects.get_or_create(user=request.user)
+        serializer = CartSerializer(cart, context={'request': request})
+        return Response(serializer.data)
+
+    def post(self, request):
+        product_id = request.data.get("product_id")
+        if not product_id:
+            return Response({"error": "Product ID is required"}, status=400)
+
+        product = Product.objects.filter(id=product_id).first()
+        if not product:
+            return Response({"error": "Product not found"}, status=404)
+
+        cart, _ = Cart.objects.get_or_create(user=request.user)
+        if CartItem.objects.filter(cart=cart, product=product).exists():
+            return Response({"error": "Product already in cart"}, status=400)
+
+        CartItem.objects.create(cart=cart, product=product)
+        return Response({"message": "Product added to cart"}, status=201)
+
+    def delete(self, request):
+        product_id = request.data.get("product_id")
+        cart = Cart.objects.filter(user=request.user).first()
+        if not cart:
+            return Response({"error": "Cart not found"}, status=404)
+
+        item = CartItem.objects.filter(cart=cart, product_id=product_id).first()
+        if not item:
+            return Response({"error": "Item not found in cart"}, status=404)
+
+        item.delete()
+        return Response({"message": "Product removed from cart"}, status=200)

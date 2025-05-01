@@ -7,5 +7,6 @@ urlpatterns = [
     path('logout/', views.logout),
     path('authenticated/', views.authenticated),
     path('products/', views.ProductListCreateAPIView.as_view(), name='product-list-create'),
-    path('products/<int:pk>/', views.ProductRetrieveUpdateDestroyAPIView.as_view(), name='product-retrieve-update-destroy')
+    path('products/<int:pk>/', views.ProductRetrieveUpdateDestroyAPIView.as_view(), name='product-retrieve-update-destroy'),
+    path('cart/', views.CartView.as_view(), name='cart-view')
 ]

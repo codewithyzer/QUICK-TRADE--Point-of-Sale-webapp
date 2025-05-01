@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
-from .models import Product, Category
+from .models import Product, Category, Cart, CartItem
 from rest_framework.validators import UniqueValidator
 
 
@@ -27,3 +27,21 @@ class ProductSerializer(serializers.ModelSerializer):
         model = Product
         fields = '__all__'
         read_only_fields = ['id', 'uploaded_at']
+        
+class CartItemSerializer(serializers.ModelSerializer):
+    product = ProductSerializer(read_only=True)
+    product_id = serializers.PrimaryKeyRelatedField(
+        queryset = Product.objects.all(),
+        source='product',
+        write_only=True
+    )
+    class Meta:
+        model = CartItem
+        fields = ['id', 'product', 'product_id']
+        
+class CartSerializer(serializers.ModelSerializer):
+    items = CartItemSerializer(many=True, read_only=True)
+    class Meta:
+        model = Cart
+        fields = '__all__'
+        read_only_fields = ['id', 'created_at']

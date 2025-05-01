@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 export default function SmallCard(props) {
   const nav = useNavigate();
   function handleClick() {
-    nav(`/home/products/${props.id}`);
+    nav(`/buy/products/${props.id}`);
   }
   return (
     <div

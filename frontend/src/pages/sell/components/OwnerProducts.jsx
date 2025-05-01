@@ -16,8 +16,8 @@ export default function OwnerProducts(props) {
         {ownedProducts.length > 0 ? (
           ownedProducts
         ) : (
-          <div className="border-primary flex h-70 w-120 flex-col items-center justify-center overflow-hidden rounded-xl border-1 bg-white shadow-md transition-all duration-50">
-            <h1 className="text-lg font-medium text-gray-400">
+          <div className="border-thirdary flex h-70 w-120 flex-col items-center justify-center overflow-hidden rounded-md border-1 bg-white shadow-md transition-all duration-50">
+            <h1 className="font-sm text-lg text-gray-400">
               You have no products yet
             </h1>
           </div>

@@ -18,6 +18,7 @@ export default function UploadProduct() {
     productRFS: "",
     productCategory: "",
   });
+
   const handleClick = () => {
     fileInputRef.current.click();
   };
@@ -117,10 +118,10 @@ export default function UploadProduct() {
       </h1>
       <form
         onSubmit={handleSubmit}
-        className="border-primary font-poppins flex w-165 flex-col gap-4"
+        className="border-primary font-poppins flex w-165 flex-col gap-5"
       >
         <div className="relative">
-          <div className="border-primary flex h-90 w-full flex-col items-center justify-center rounded-xl border-1 border-dashed bg-white shadow-sm">
+          <div className="border-thirdary flex h-90 w-full flex-col items-center justify-center rounded-md border-1 border-solid bg-white shadow-sm">
             {!preview ? (
               <>
                 <p className="text-gray-400">No Product Image</p>
@@ -136,7 +137,7 @@ export default function UploadProduct() {
               <img
                 src={preview}
                 alt="Preview"
-                className="h-full w-full rounded-xl object-cover"
+                className="h-full w-full rounded-md object-cover"
               />
             )}
           </div>
@@ -149,116 +150,124 @@ export default function UploadProduct() {
             className="hidden"
           />
         </div>
-        <p className="text-thirdary text-[0.9rem] font-medium">
-          Product details<i className="fa-solid fa-circle-info ml-1"></i>
-        </p>
-        <div className="flex flex-col gap-4">
-          <div className="flex flex-col gap-2">
-            <label htmlFor="productName" className="text-primary text-[0.8rem]">
-              Product name
-            </label>
-            <input
-              value={newProduct.productName}
-              type="text"
-              name="productName"
-              className="input-two border-primary text-primary rounded-lg border-1 bg-white px-2 py-1.5 text-[0.8rem] font-semibold shadow-sm outline-none"
-              onChange={handleChange}
-            />
-            {inputErrors.productName && (
-              <div className="mt-0.5 text-[0.75rem] font-medium text-red-400">
-                <i className="fa-solid fa-circle-exclamation"></i>{" "}
-                {inputErrors.productName}
-              </div>
-            )}
+        <div className="flex w-165 flex-col gap-4 rounded-md bg-white p-7">
+          <p className="text-thirdary text-[0.9rem] font-medium">
+            Product details<i className="fa-solid fa-circle-info ml-1"></i>
+          </p>
+          <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-2">
+              <label
+                htmlFor="productName"
+                className="text-primary text-[0.8rem]"
+              >
+                Product name
+              </label>
+              <input
+                value={newProduct.productName}
+                type="text"
+                name="productName"
+                className="input-two border-primary text-primary rounded-md border-1 bg-white px-2 py-1.5 text-[0.8rem] font-semibold shadow-sm outline-none"
+                onChange={handleChange}
+              />
+              {inputErrors.productName && (
+                <div className="mt-0.5 text-[0.75rem] font-medium text-red-400">
+                  <i className="fa-solid fa-circle-exclamation"></i>{" "}
+                  {inputErrors.productName}
+                </div>
+              )}
+            </div>
+            <div className="flex flex-col gap-2">
+              <label
+                htmlFor="productPrice"
+                className="text-primary text-[0.8rem]"
+              >
+                Product price
+              </label>
+              <input
+                value={newProduct.productPrice}
+                onChange={handleChange}
+                type="number"
+                name="productPrice"
+                className="input-two border-primary text-primary rounded-md border-1 bg-white px-2 py-1.5 text-[0.8rem] font-semibold shadow-sm outline-none"
+              />
+              {inputErrors.productPrice && (
+                <div className="mt-0.5 text-[0.75rem] font-medium text-red-400">
+                  <i className="fa-solid fa-circle-exclamation"></i>{" "}
+                  {inputErrors.productPrice}
+                </div>
+              )}
+            </div>
+            <div className="flex flex-col gap-2">
+              <label
+                htmlFor="productRFS"
+                className="text-primary text-[0.8rem]"
+              >
+                Reason for selling
+              </label>
+              <textarea
+                value={newProduct.productRFS}
+                onChange={handleChange}
+                name="productRFS"
+                className="input-two border-primary text-primary max-h-50 min-h-50 rounded-md border-1 bg-white px-2 py-1.5 text-[0.8rem] font-semibold shadow-sm outline-none"
+              />
+              {inputErrors.productRFS && (
+                <div className="mt-0.5 text-[0.75rem] font-medium text-red-400">
+                  <i className="fa-solid fa-circle-exclamation"></i>{" "}
+                  {inputErrors.productRFS}
+                </div>
+              )}
+            </div>
+            <div className="z-10 flex flex-col gap-2">
+              <label
+                htmlFor="productCategory"
+                className="text-primary text-[0.8rem]"
+              >
+                Product category
+              </label>
+              <select
+                value={newProduct.productCategory}
+                onChange={handleChange}
+                name="productCategory"
+                className="border-primary text-primary cursor-pointer rounded-md border-1 bg-white px-2 py-1.5 text-[0.8rem] font-semibold shadow-sm outline-none"
+              >
+                <option value="" disabled></option>
+                <option value="1">Electronics</option>
+                <option value="2">Home Appliances</option>
+                <option value="3">Fashion</option>
+                <option value="4">Health & Beauty</option>
+                <option value="5">Furniture</option>
+                <option value="6">Toys & Games</option>
+                <option value="7">Sports & Outdoors</option>
+                <option value="8">Automotive</option>
+                <option value="9">Groceries</option>
+                <option value="10">Book & Media</option>
+              </select>
+              {inputErrors.productCategory && (
+                <div className="mt-0.5 text-[0.75rem] font-medium text-red-400">
+                  <i className="fa-solid fa-circle-exclamation"></i>{" "}
+                  {inputErrors.productCategory}
+                </div>
+              )}
+            </div>
           </div>
-          <div className="flex flex-col gap-2">
-            <label
-              htmlFor="productPrice"
-              className="text-primary text-[0.8rem]"
-            >
-              Product price
-            </label>
-            <input
-              value={newProduct.productPrice}
-              onChange={handleChange}
-              type="number"
-              name="productPrice"
-              className="input-two border-primary text-primary rounded-lg border-1 bg-white px-2 py-1.5 text-[0.8rem] font-semibold shadow-sm outline-none"
-            />
-            {inputErrors.productPrice && (
-              <div className="mt-0.5 text-[0.75rem] font-medium text-red-400">
-                <i className="fa-solid fa-circle-exclamation"></i>{" "}
-                {inputErrors.productPrice}
-              </div>
-            )}
-          </div>
-          <div className="flex flex-col gap-2">
-            <label htmlFor="productRFS" className="text-primary text-[0.8rem]">
-              Reason for selling
-            </label>
-            <textarea
-              value={newProduct.productRFS}
-              onChange={handleChange}
-              name="productRFS"
-              className="input-two border-primary text-primary max-h-50 min-h-50 rounded-lg border-1 bg-white px-2 py-1.5 text-[0.8rem] font-semibold shadow-sm outline-none"
-            />
-            {inputErrors.productRFS && (
-              <div className="mt-0.5 text-[0.75rem] font-medium text-red-400">
-                <i className="fa-solid fa-circle-exclamation"></i>{" "}
-                {inputErrors.productRFS}
-              </div>
-            )}
-          </div>
-          <div className="z-10 flex flex-col gap-2">
-            <label
-              htmlFor="productCategory"
-              className="text-primary text-[0.8rem]"
-            >
-              Product category
-            </label>
-            <select
-              value={newProduct.productCategory}
-              onChange={handleChange}
-              name="productCategory"
-              className="border-primary text-primary cursor-pointer rounded-lg border-1 bg-white px-2 py-1.5 text-[0.8rem] font-semibold shadow-sm outline-none"
-            >
-              <option value="" disabled></option>
-              <option value="1">Electronics</option>
-              <option value="2">Home Appliances</option>
-              <option value="3">Fashion</option>
-              <option value="4">Health & Beauty</option>
-              <option value="5">Furniture</option>
-              <option value="6">Toys & Games</option>
-              <option value="7">Sports & Outdoors</option>
-              <option value="8">Automotive</option>
-              <option value="9">Groceries</option>
-              <option value="10">Book & Media</option>
-            </select>
-            {inputErrors.productCategory && (
-              <div className="mt-0.5 text-[0.75rem] font-medium text-red-400">
-                <i className="fa-solid fa-circle-exclamation"></i>{" "}
-                {inputErrors.productCategory}
-              </div>
-            )}
-          </div>
+          <Guidline
+            checkboxStatus={readGuidlines}
+            changeCheckbox={handleCheckboxChange}
+          />
+          {guidelineError && (
+            <div className="mt-2 text-[0.75rem] font-medium text-red-400">
+              <i className="fa-solid fa-circle-exclamation"></i> Please make
+              sure you agree to product upload terms and conditions
+            </div>
+          )}
+          <button className="bg-thirdary hover:bg-primary cursor-pointer rounded-lg py-3 font-medium text-white transition-all duration-200">
+            Upload Product
+          </button>
         </div>
-        <Guidline
-          checkboxStatus={readGuidlines}
-          changeCheckbox={handleCheckboxChange}
-        />
-        {guidelineError && (
-          <div className="mt-2 text-[0.75rem] font-medium text-red-400">
-            <i className="fa-solid fa-circle-exclamation"></i> Please make sure
-            you agree to product upload terms and conditions
-          </div>
-        )}
-        <button className="bg-thirdary hover:bg-primary cursor-pointer rounded-lg py-3 font-medium text-white transition-all duration-200">
-          Upload Product
-        </button>
       </form>
       {(uploadSuccess || isFadingOut) && (
         <div
-          className={`${isFadingOut ? "fade-out" : "fade-in"} font-poppins fixed right-5 bottom-5 rounded-lg bg-green-400 p-5 text-sm font-medium text-white`}
+          className={`${isFadingOut ? "fade-out" : "fade-in"} font-poppins fixed right-5 bottom-5 z-20 rounded-lg bg-green-400 p-5 text-sm font-medium text-white`}
         >
           <i className="fa-solid fa-circle-check mr-1"></i> Product upload
           succesful!

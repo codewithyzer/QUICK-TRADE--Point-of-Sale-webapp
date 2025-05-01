@@ -7,6 +7,7 @@ const AUTHENTICATED_URL = `${BASE_URL}authenticated/`;
 const GET_PRODUCTS_URL = `${BASE_URL}products/?`;
 const GET_PRODUCT_URL = `${BASE_URL}products/`;
 const POST_PRODUCTS_URL = `${BASE_URL}products/`;
+const CART_URL = `${BASE_URL}cart/`;
 import { useNavigate } from "react-router-dom";
 
 export async function login(username, password) {
@@ -100,3 +101,39 @@ export async function retrieveProduct(pk) {
     throw error;
   }
 }
+
+export async function viewCart() {
+  try {
+    const res = await axios.get(CART_URL, { withCredentials: true });
+    return res.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function addToCart(id) {
+  try {
+    const res = await axios.post(
+      CART_URL,
+      { product_id: id },
+      { withCredentials: true },
+    );
+    return res.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function removeFromCart(id) {
+  try {
+    const res = await axios.delete(CART_URL, {
+      data: { product_id: id },
+      withCredentials: true,
+    });
+    return res.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export default BASE_URL;

@@ -2,7 +2,7 @@ import defaultProductImage from "../assets/No Product Image.svg";
 
 export default function LargeCard(props) {
   return (
-    <div className="border-primary flex max-h-90 min-h-75 max-w-120 min-w-100 cursor-pointer flex-col overflow-hidden rounded-sm bg-white transition-all duration-50 hover:border-1">
+    <div className="border-primary flex max-h-90 min-h-75 max-w-120 min-w-100 cursor-pointer flex-col overflow-hidden rounded-md bg-white transition-all duration-50 hover:border-1">
       <div className="flex h-4/5 w-full items-center justify-center bg-white">
         <img
           src={props.image}
