@@ -24,6 +24,10 @@ export default function Guidline(props) {
         selling (RFS).
       </li>
       <li>
+        <i className="fa-solid fa-check mr-1"></i> Make sure to setup a
+        reasonable meet-up place.
+      </li>
+      <li>
         <i className="fa-solid fa-check mr-1"></i> Make sure all information
         provided is truthful and up-to-date.
       </li>

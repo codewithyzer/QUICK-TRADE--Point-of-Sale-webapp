@@ -7,6 +7,7 @@ import Header from "../../components/Header";
 import { useAuth } from "../../context/AuthContext";
 import maps from "../../assets/maps_example.png";
 import { addToCart } from "../../endpoints/api";
+import MapView from "./components/MapView.jsx";
 
 export default function Product() {
   const { user } = useAuth();
@@ -28,6 +29,7 @@ export default function Product() {
       try {
         const data = await retrieveProduct(id);
         setProductData(data);
+        console.log(data);
       } catch (error) {
         console.error(error);
       }
@@ -166,15 +168,20 @@ export default function Product() {
                   Meetup preferences
                 </p>
                 <div className="flex flex-col">
-                  <img
-                    src={maps}
-                    alt="meet up preference"
-                    className="border-thirdary rounded-md border-1"
-                  />
-                  <p className="text-primary mt-2 font-medium">Alangilan</p>
-                  <p className="text-primary text-sm">
-                    Location is approximate
+                  <div className="overflow-hidden rounded-md">
+                    <MapView
+                      lat={productData.meetup_lat}
+                      lng={productData.meetup_lng}
+                    />
+                  </div>
+                  <p className="text-primary mt-2 font-medium">
+                    {productData.meetup_place_name}
                   </p>
+                  {productData.meetup_place_name && (
+                    <p className="text-primary text-sm">
+                      Location is approximate
+                    </p>
+                  )}
                 </div>
               </div>
             </div>

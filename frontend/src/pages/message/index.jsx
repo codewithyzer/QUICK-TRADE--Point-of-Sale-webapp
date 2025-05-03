@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import Header from "../../components/Header";
 import MessageSidebar from "./components/MessageSidebar.jsx";
 import { useAuth } from "../../context/AuthContext";
-import { MapPicker } from "../../components/MapPicker.jsx";
 
 export default function MessagePage() {
   const { user } = useAuth();
@@ -17,9 +16,6 @@ export default function MessagePage() {
     <>
       <Header user={user} />
       <MessageSidebar />
-      <main className="font-poppins mt-[70px] ml-[284px] flex flex-col gap-6 bg-gray-100 p-8">
-        <MapPicker />
-      </main>
     </>
   );
 }

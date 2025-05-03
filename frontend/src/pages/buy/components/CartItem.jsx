@@ -1,10 +1,13 @@
 import { useState } from "react";
 import { removeFromCart } from "../../../endpoints/api";
+import { useNavigate } from "react-router-dom";
 
 export default function CartItem(props) {
   const [isShownCheck, setIsShownCheck] = useState(false);
   const [isRemoved, setIsRemoved] = useState(false);
   const [isFadingOut, setIsFadingOut] = useState(false);
+  const nav = useNavigate();
+
   function handleShowCheck() {
     setIsShownCheck((prev) => !prev);
   }
@@ -19,6 +22,10 @@ export default function CartItem(props) {
     }
   }
 
+  function handleReviewProduct() {
+    nav(`/buy/products/${props.product.id}`);
+  }
+
   return (
     <>
       <div className="relative flex h-45 w-full gap-3 overflow-hidden rounded-md bg-white transition-all duration-50">
@@ -31,11 +38,11 @@ export default function CartItem(props) {
         </button>
         {isShownCheck && (
           <div className="bg-primary absolute top-3 right-11 z-2 flex flex-col items-start gap-2 rounded-md p-4.5">
-            <button className="w-full cursor-pointer text-sm font-medium text-white transition-all duration-150 hover:opacity-70">
-              <i class="fa-solid fa-user mr-2"></i>check owner
-            </button>
-            <button className="w-full cursor-pointer text-sm font-medium text-white transition-all duration-150 hover:opacity-70">
-              <i class="fa-solid fa-location-dot mr-2"></i>check meet-up
+            <button
+              onClick={handleReviewProduct}
+              className="w-full cursor-pointer text-sm font-medium text-white transition-all duration-150 hover:opacity-70"
+            >
+              Review product details
             </button>
           </div>
         )}
@@ -51,7 +58,7 @@ export default function CartItem(props) {
           <div className="flex flex-col gap-1">
             <div className="gap-0.1 flex flex-col">
               <p className="text-thirdary text-[0.75rem] font-medium">
-                Product name:
+                Product name
               </p>
               <p className="text-lg">{props.product.name}</p>
             </div>
@@ -71,7 +78,7 @@ export default function CartItem(props) {
               Remove
             </button>
             <button className="bg-primary cursor-pointer rounded-md px-2.5 py-1 text-sm font-medium text-white transition-all duration-200 hover:opacity-80">
-              checkout
+              Buy
             </button>
           </div>
         </div>

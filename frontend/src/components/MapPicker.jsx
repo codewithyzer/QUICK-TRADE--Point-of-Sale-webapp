@@ -21,7 +21,7 @@ export function MapPicker({ onLocationSelect }) {
       center={position}
       zoom={13}
       scrollWheelZoom={true}
-      style={{ height: "400px", width: "100%" }}
+      style={{ height: "300px", width: "100%" }}
     >
       <TileLayer
         attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a>'

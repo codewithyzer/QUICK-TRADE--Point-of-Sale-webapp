@@ -14,6 +14,9 @@ class Product(models.Model):
     in_stock = models.BooleanField(default=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     rfs = models.TextField(blank=False)
+    meetup_place_name = models.CharField(max_length=255, blank=True, null=True)
+    meetup_lat = models.FloatField(null=True, blank=True)
+    meetup_lng = models.FloatField(null=True, blank=True)
     
     category = models.ForeignKey(
         Category,

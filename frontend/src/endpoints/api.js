@@ -65,6 +65,9 @@ export async function new_product(
   categoryParam,
   rfsParam,
   imageParam,
+  meetupParam,
+  meetupLatParam,
+  meetupLngParam,
 ) {
   try {
     const res = await axios.post(
@@ -76,6 +79,9 @@ export async function new_product(
         category_id: categoryParam,
         in_stock: true,
         image: imageParam,
+        meetup_place_name: meetupParam,
+        meetup_lat: meetupLatParam,
+        meetup_lng: meetupLngParam,
       },
       {
         withCredentials: true,

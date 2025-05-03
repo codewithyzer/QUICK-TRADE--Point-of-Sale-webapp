@@ -13,6 +13,7 @@ import SignupStatus from "./pages/signupstatus";
 import SigninStatus from "./pages/signinstatus";
 import ProtectedRoute from "./route/ProtectedRoute.jsx";
 import Product from "./pages/product/index.jsx";
+import FilteredProducts from "./pages/filtered/index.jsx";
 
 function App() {
   return (
@@ -67,6 +68,14 @@ function App() {
           element={
             <ProtectedRoute>
               <Product />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path={"/home/products/filter/:category"}
+          element={
+            <ProtectedRoute>
+              <FilteredProducts />
             </ProtectedRoute>
           }
         />

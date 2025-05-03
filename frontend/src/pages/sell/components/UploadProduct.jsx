@@ -1,6 +1,7 @@
 import { useState, useRef } from "react";
 import Guidline from "./Guidline";
 import { new_product } from "../../../endpoints/api";
+import { MapPicker } from "../../../components/MapPicker";
 
 export default function UploadProduct() {
   const fileInputRef = useRef();
@@ -17,7 +18,10 @@ export default function UploadProduct() {
     productPrice: "",
     productRFS: "",
     productCategory: "",
+    meetupPreference: "",
   });
+
+  const [meetupCoords, setMeetupCoords] = useState(null);
 
   const handleClick = () => {
     fileInputRef.current.click();
@@ -57,6 +61,8 @@ export default function UploadProduct() {
       errors.productRFS = "Reason for selling is required.";
     if (!newProduct.productCategory)
       errors.productCategory = "Please select a category.";
+    if (!newProduct.meetupPreference)
+      errors.meetupPreference = "Meet-up place is required";
 
     return errors;
   };
@@ -82,6 +88,9 @@ export default function UploadProduct() {
         newProduct.productCategory,
         newProduct.productRFS,
         newProduct.productImage,
+        newProduct.meetupPreference,
+        meetupCoords?.lat,
+        meetupCoords?.lng,
       );
       console.log("Upload Successful:", data);
 
@@ -91,6 +100,7 @@ export default function UploadProduct() {
         productPrice: "",
         productRFS: "",
         productCategory: "",
+        meetupPreference: "",
       });
       setPreview(null);
       setInputErrors({});
@@ -248,6 +258,38 @@ export default function UploadProduct() {
                   {inputErrors.productCategory}
                 </div>
               )}
+            </div>
+            <div className="flex flex-col gap-2">
+              <label
+                htmlFor="productName"
+                className="text-primary text-[0.8rem]"
+              >
+                Meet-up place
+              </label>
+              <input
+                value={newProduct.meetupPreference}
+                type="text"
+                name="meetupPreference"
+                className="input-two border-primary text-primary rounded-md border-1 bg-white px-2 py-1.5 text-[0.8rem] font-semibold shadow-sm outline-none"
+                onChange={handleChange}
+              />
+              {inputErrors.meetupPreference && (
+                <div className="mt-0.5 text-[0.75rem] font-medium text-red-400">
+                  <i className="fa-solid fa-circle-exclamation"></i>{" "}
+                  {inputErrors.meetupPreference}
+                </div>
+              )}
+            </div>
+            <div className="z-0 flex flex-col gap-2">
+              <label
+                htmlFor="productCategory"
+                className="text-primary text-[0.8rem]"
+              >
+                Meet-up preference
+              </label>
+              <div className="overflow-hidden rounded-md">
+                <MapPicker onLocationSelect={setMeetupCoords} />
+              </div>
             </div>
           </div>
           <Guidline
