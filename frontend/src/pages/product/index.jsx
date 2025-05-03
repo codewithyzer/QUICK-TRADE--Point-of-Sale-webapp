@@ -8,6 +8,9 @@ import { useAuth } from "../../context/AuthContext";
 import maps from "../../assets/maps_example.png";
 import { addToCart } from "../../endpoints/api";
 import MapView from "./components/MapView.jsx";
+import SendMessage from "./components/SendMessage.jsx";
+import { filterConversation } from "../../endpoints/api";
+import { createConversation } from "../../endpoints/api";
 
 export default function Product() {
   const { user } = useAuth();
@@ -17,6 +20,8 @@ export default function Product() {
   const [isFadingOut1, setIsFadingOut1] = useState(false);
   const [isFadingOut2, setIsFadingOut2] = useState(false);
   const [productData, setProductData] = useState({});
+  const [filteredConversation, setFilteredConversation] = useState({});
+
   const colors = [
     "bg-blue-400",
     "bg-orange-400",
@@ -24,12 +29,27 @@ export default function Product() {
     "bg-violet-400",
   ];
   const randomColor = colors[Math.floor(Math.random() * colors.length)];
+
   useEffect(() => {
     async function fetchData() {
       try {
-        const data = await retrieveProduct(id);
-        setProductData(data);
-        console.log(data);
+        const product = await retrieveProduct(id);
+        setProductData(product);
+        console.log(product);
+
+        const conversation = await filterConversation(
+          user.id,
+          product.owner.id,
+        );
+        if (conversation.length > 0) {
+          setFilteredConversation(conversation[0]);
+        } else {
+          try {
+            await createConversation(product.owner.id);
+          } catch (error) {
+            console.error(error);
+          }
+        }
       } catch (error) {
         console.error(error);
       }
@@ -139,7 +159,7 @@ export default function Product() {
                       onClick={handleAddToCart}
                       className="cursor-pointer rounded-md bg-gray-400 px-3.5 py-2 text-sm font-medium text-white transition-all duration-200 hover:text-white hover:opacity-80"
                     >
-                      <i class="fa-solid fa-cart-plus mr-2"></i>Add to cart
+                      <i className="fa-solid fa-cart-plus mr-2"></i>Add to cart
                     </button>
                     <button className="bg-primary cursor-pointer rounded-md px-3.5 py-2 text-sm font-medium text-white transition-all duration-200 hover:opacity-80">
                       Buy now
@@ -163,6 +183,10 @@ export default function Product() {
                   </div>
                 </div>
               </div>
+              <SendMessage
+                sellerId={productData.owner?.id}
+                conversationId={filteredConversation.id}
+              />
               <div className="flex flex-col gap-2 rounded-md bg-white p-7">
                 <p className="text-thirdary text-lg font-semibold">
                   Meetup preferences
@@ -205,7 +229,7 @@ export default function Product() {
         ) : (
           <div className="fade-in font-poppins flex h-148 w-full flex-col items-center justify-center gap-1">
             <p className="text-3xl font-semibold text-red-400">
-              Product not found<i class="fa-solid fa-exclamation ml-2"></i>
+              Product not found<i className="fa-solid fa-exclamation ml-2"></i>
             </p>
             <p className="text-primary w-80 text-center text-lg font-medium">
               Hey {user?.username}, it seems like the product you trying to find

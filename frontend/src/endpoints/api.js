@@ -8,6 +8,9 @@ const GET_PRODUCTS_URL = `${BASE_URL}products/?`;
 const GET_PRODUCT_URL = `${BASE_URL}products/`;
 const POST_PRODUCTS_URL = `${BASE_URL}products/`;
 const CART_URL = `${BASE_URL}cart/`;
+const CONVERSATIONS_URL = `${BASE_URL}conversations/`;
+const CONVERSATION_FILTER_URL = `${BASE_URL}conversations/filter/`;
+const MESSAGES_URL = `${BASE_URL}messages/`;
 import { useNavigate } from "react-router-dom";
 
 export async function login(username, password) {
@@ -136,6 +139,44 @@ export async function removeFromCart(id) {
       data: { product_id: id },
       withCredentials: true,
     });
+    return res.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function createConversation(sellerIdparam) {
+  try {
+    const res = axios.post(
+      CONVERSATIONS_URL,
+      { seller: sellerIdparam },
+      { withCredentials: true },
+    );
+    return res.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function filterConversation(buyerIdparam, sellerIdparam) {
+  try {
+    const res = await axios.get(
+      `${CONVERSATION_FILTER_URL}?buyer=${buyerIdparam}&seller=${sellerIdparam}`,
+      { withCredentials: true },
+    );
+    return res.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function sendAMessage(conversationId, messageText) {
+  try {
+    const res = await axios.post(
+      MESSAGES_URL,
+      { conversation: conversationId, text: messageText },
+      { withCredentials: true },
+    );
     return res.data;
   } catch (error) {
     throw error;

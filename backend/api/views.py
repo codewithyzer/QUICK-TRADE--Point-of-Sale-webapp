@@ -13,16 +13,17 @@ from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 
-from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView, CreateAPIView, ListAPIView
 from rest_framework.views import APIView
 
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import SearchFilter, OrderingFilter
 
-from .models import Product, Cart, CartItem
-from .serializers import ProductSerializer, UserSerializer, CartSerializer, CartItemSerializer
+from .models import Product, Cart, CartItem, Conversation, Message
+from .serializers import ProductSerializer, UserSerializer, CartSerializer, CartItemSerializer, ConversationSerializer, MessageSerializer
 from .filters import ProductFilter
 
+from rest_framework import serializers
 
 # Create your views here.
 class CustomTokenObtainPairView(TokenObtainPairView):
@@ -158,3 +159,48 @@ class CartView(APIView):
 
         item.delete()
         return Response({"message": "Product removed from cart"}, status=200)
+    
+class ConversationListCreateView(ListCreateAPIView):
+    serializer_class = ConversationSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        user = self.request.user
+        return Conversation.objects.filter(buyer=user) | Conversation.objects.filter(seller=user)
+
+    def perform_create(self, serializer):
+        buyer = self.request.user
+        seller = self.request.data.get('seller')
+
+        # prevent duplicate conversation
+        if Conversation.objects.filter(buyer=buyer, seller_id=seller).exists() or \
+           Conversation.objects.filter(buyer_id=seller, seller=buyer).exists():
+            raise serializers.ValidationError("Conversation already exists.")
+
+        serializer.save(buyer=buyer)
+        
+class MessageCreateView(CreateAPIView):
+    queryset = Message.objects.all()
+    serializer_class = MessageSerializer
+    permission_classes = [IsAuthenticated]
+
+    def perform_create(self, serializer):
+        serializer.save(sender=self.request.user)
+        
+class ConversationFilterView(ListAPIView):
+    serializer_class = ConversationSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        buyer_id = self.request.query_params.get('buyer')
+        seller_id = self.request.query_params.get('seller')
+
+        if buyer_id and seller_id:
+            return Conversation.objects.filter(
+                buyer_id=buyer_id,
+                seller_id=seller_id
+            ) | Conversation.objects.filter(
+                buyer_id=seller_id,
+                seller_id=buyer_id
+            )
+        return Conversation.objects.none()
