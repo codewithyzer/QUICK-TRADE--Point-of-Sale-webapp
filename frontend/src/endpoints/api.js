@@ -147,11 +147,20 @@ export async function removeFromCart(id) {
 
 export async function createConversation(sellerIdparam) {
   try {
-    const res = axios.post(
+    const res = await axios.post(
       CONVERSATIONS_URL,
       { seller: sellerIdparam },
       { withCredentials: true },
     );
+    return res.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function getConversations() {
+  try {
+    const res = await axios.get(CONVERSATIONS_URL, { withCredentials: true });
     return res.data;
   } catch (error) {
     throw error;

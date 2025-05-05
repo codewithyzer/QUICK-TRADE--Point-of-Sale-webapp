@@ -14,6 +14,7 @@ import SigninStatus from "./pages/signinstatus";
 import ProtectedRoute from "./route/ProtectedRoute.jsx";
 import Product from "./pages/product/index.jsx";
 import FilteredProducts from "./pages/filtered/index.jsx";
+import ConversationPage from "./pages/conversation/index.jsx";
 
 function App() {
   return (
@@ -76,6 +77,14 @@ function App() {
           element={
             <ProtectedRoute>
               <FilteredProducts />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path={"/messages/conversation/:id"}
+          element={
+            <ProtectedRoute>
+              <ConversationPage />
             </ProtectedRoute>
           }
         />

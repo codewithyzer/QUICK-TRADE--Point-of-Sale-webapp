@@ -28,7 +28,7 @@ export default function CartItem(props) {
 
   return (
     <>
-      <div className="relative flex h-45 w-full gap-3 overflow-hidden rounded-md bg-white transition-all duration-50">
+      <div className="relative flex h-45 w-full gap-3 overflow-hidden rounded-md border-1 border-gray-400 bg-white transition-all duration-50">
         <button
           onClick={handleShowCheck}
           className="absolute top-2 right-3 z-1 cursor-pointer rounded-lg px-2.5 py-1 text-lg transition-all duration-150 hover:bg-gray-300"

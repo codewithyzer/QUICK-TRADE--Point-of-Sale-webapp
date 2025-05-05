@@ -123,15 +123,15 @@ export default function UploadProduct() {
 
   return (
     <div>
-      <h1 className="text-primary mb-5 text-3xl font-semibold">
+      <h1 className="text-primary mb-5 text-2xl font-semibold">
         Upload a product
       </h1>
       <form
         onSubmit={handleSubmit}
-        className="border-primary font-poppins flex w-165 flex-col gap-5"
+        className="font-poppins flex w-165 flex-col gap-5"
       >
         <div className="relative">
-          <div className="border-thirdary flex h-90 w-full flex-col items-center justify-center rounded-md border-1 border-solid bg-white shadow-sm">
+          <div className="flex h-90 w-full flex-col items-center justify-center rounded-md border-1 border-solid border-gray-400 bg-white">
             {!preview ? (
               <>
                 <p className="text-gray-400">No Product Image</p>
