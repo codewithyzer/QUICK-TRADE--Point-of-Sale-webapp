@@ -1,12 +1,43 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { removeFromCart } from "../../../endpoints/api";
 import { useNavigate } from "react-router-dom";
+import { updateProduct } from "../../../endpoints/api";
+import { addNotification } from "../../../endpoints/api";
+import { sendAMessage } from "../../../endpoints/api";
+import { useAuth } from "../../../context/AuthContext";
+import { filterConversation } from "../../../endpoints/api";
+import { createConversation } from "../../../endpoints/api";
 
 export default function CartItem(props) {
+  const { user } = useAuth();
   const [isShownCheck, setIsShownCheck] = useState(false);
   const [isRemoved, setIsRemoved] = useState(false);
   const [isFadingOut, setIsFadingOut] = useState(false);
+  const [filteredConversation, setFilteredConversation] = useState({});
   const nav = useNavigate();
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const conversation = await filterConversation(
+          user.id,
+          props.product.owner.id,
+        );
+        if (conversation.length > 0) {
+          setFilteredConversation(conversation[0]);
+        } else {
+          try {
+            await createConversation(props.product.owner.id);
+          } catch (error) {
+            console.error(error);
+          }
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    fetchData();
+  }, []);
 
   function handleShowCheck() {
     setIsShownCheck((prev) => !prev);
@@ -26,9 +57,36 @@ export default function CartItem(props) {
     nav(`/buy/products/${props.product.id}`);
   }
 
+  async function handleBuy() {
+    try {
+      await updateProduct(user.id, props.product.id);
+      await addNotification(
+        props.product.owner.id,
+        `${user.username} just bought your product "${props.product.name.toUpperCase()}".`,
+      );
+      if (props.product.in_stock) {
+        window.location.reload();
+        handleRemove();
+      } else {
+        console.log("Product already bought!");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+    try {
+      const data = await sendAMessage(
+        filteredConversation.id,
+        `Automatic Message: I bought your product "${props.product.name}"`,
+      );
+      console.log(data);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   return (
     <>
-      <div className="relative flex h-45 w-full gap-3 overflow-hidden rounded-md border-1 border-gray-400 bg-white transition-all duration-50">
+      <div className="relative flex h-45 w-full gap-3 overflow-hidden rounded-md bg-white transition-all duration-50">
         <button
           onClick={handleShowCheck}
           className="absolute top-2 right-3 z-1 cursor-pointer rounded-lg px-2.5 py-1 text-lg transition-all duration-150 hover:bg-gray-300"
@@ -77,7 +135,10 @@ export default function CartItem(props) {
             >
               Remove
             </button>
-            <button className="bg-primary cursor-pointer rounded-md px-2.5 py-1 text-sm font-medium text-white transition-all duration-200 hover:opacity-80">
+            <button
+              onClick={handleBuy}
+              className="bg-primary cursor-pointer rounded-md px-2.5 py-1 text-sm font-medium text-white transition-all duration-200 hover:opacity-80"
+            >
               Buy
             </button>
           </div>

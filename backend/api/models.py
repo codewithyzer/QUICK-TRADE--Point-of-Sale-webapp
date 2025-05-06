@@ -80,3 +80,13 @@ class Message(models.Model):
 
     def __str__(self):
         return f"{self.sender.username}: {self.text[:30]}"
+    
+    
+class Notification(models.Model):
+    notification = models.CharField(max_length=255, blank=False)
+    owner = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name='owned_notifications'
+    )
+    timestamp = models.DateTimeField(auto_now_add=True)

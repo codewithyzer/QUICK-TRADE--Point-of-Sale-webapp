@@ -19,9 +19,9 @@ from rest_framework.views import APIView
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import SearchFilter, OrderingFilter
 
-from .models import Product, Cart, CartItem, Conversation, Message
-from .serializers import ProductSerializer, UserSerializer, CartSerializer, CartItemSerializer, ConversationSerializer, MessageSerializer
-from .filters import ProductFilter
+from .models import Product, Cart, CartItem, Conversation, Message, Notification
+from .serializers import ProductSerializer, UserSerializer, CartSerializer, CartItemSerializer, ConversationSerializer, MessageSerializer, NotificationSerializer
+from .filters import ProductFilter, NotificationFilter
 
 from rest_framework import serializers
 
@@ -110,8 +110,9 @@ class ProductListCreateAPIView(ListCreateAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     permission_classes = [IsAuthenticated]
-    filter_backends = [DjangoFilterBackend]
+    filter_backends = [DjangoFilterBackend, SearchFilter]
     filterset_class = ProductFilter
+    search_fields = ['name']
     
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
@@ -204,3 +205,17 @@ class ConversationFilterView(ListAPIView):
                 seller_id=buyer_id
             )
         return Conversation.objects.none()
+    
+class NotificationListCreateAPIView(ListCreateAPIView):
+    queryset = Notification.objects.all()
+    serializer_class = NotificationSerializer
+    permission_classes = [IsAuthenticated]
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = NotificationFilter
+    
+class NotificationRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
+    queryset = Notification.objects.all()
+    serializer_class = NotificationSerializer
+    permission_classes = [IsAuthenticated]
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = NotificationFilter

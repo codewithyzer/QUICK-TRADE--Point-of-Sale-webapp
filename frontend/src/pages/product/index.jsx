@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { retrieveProduct } from "../../endpoints/api";
-import HomeSidebar from "./components/HomeSidebar";
-import BuySidebar from "./components/BuySidebar";
+import BuySidebar from "./components/BuySidebar.jsx";
 import Header from "../../components/Header";
 import { useAuth } from "../../context/AuthContext";
 import maps from "../../assets/maps_example.png";
@@ -11,6 +10,9 @@ import MapView from "./components/MapView.jsx";
 import SendMessage from "./components/SendMessage.jsx";
 import { filterConversation } from "../../endpoints/api";
 import { createConversation } from "../../endpoints/api";
+import { updateProduct } from "../../endpoints/api";
+import { sendAMessage } from "../../endpoints/api";
+import { addNotification } from "../../endpoints/api";
 
 export default function Product() {
   const { user } = useAuth();
@@ -84,6 +86,29 @@ export default function Product() {
       console.error(error);
     }
   }
+
+  async function handleBuy() {
+    try {
+      await updateProduct(user.id, id);
+      await addNotification(
+        productData.owner.id,
+        `${user.username} just bought your product "${productData.name.toUpperCase()}".`,
+      );
+      window.location.reload();
+    } catch (error) {
+      console.error(error);
+    }
+
+    try {
+      const data = await sendAMessage(
+        filteredConversation.id,
+        `Automatic Message: I bought your product "${productData.name}"`,
+      );
+      console.log(data);
+    } catch (error) {
+      console.error(error);
+    }
+  }
   return (
     <>
       <Header user={user} />
@@ -92,11 +117,11 @@ export default function Product() {
         {Object.keys(productData).length > 0 ? (
           <>
             <div className="flex w-1/2 flex-col gap-4 rounded-md">
-              <div className="fade-in relative w-full">
+              <div className="fade-in relative">
                 <img
                   src={productData.image}
                   alt="Product Image"
-                  className="rounded-sm"
+                  className="w-full rounded-sm"
                 />
                 {productData.in_stock ? (
                   <p className="absolute top-4 left-4 rounded-sm bg-green-400 px-3 py-1 text-sm font-medium text-white">
@@ -109,10 +134,8 @@ export default function Product() {
                 )}
                 <div className="bg-primary absolute right-4 bottom-4 flex items-center justify-center rounded-md px-4 py-2 text-lg font-medium text-white">
                   ₱{" "}
-                  {productData.price.length > 6
-                    ? productData.price.slice(0, -6) +
-                      ", " +
-                      productData.price.slice(-6, productData.price.length)
+                  {productData.price.length > 8
+                    ? productData.price.slice(0, 9) + "..."
                     : productData.price}
                 </div>
               </div>
@@ -154,17 +177,23 @@ export default function Product() {
                       {productData.rfs}
                     </p>
                   </div>
-                  <div className="border- ml-auto flex gap-3">
-                    <button
-                      onClick={handleAddToCart}
-                      className="cursor-pointer rounded-md bg-gray-400 px-3.5 py-2 text-sm font-medium text-white transition-all duration-200 hover:text-white hover:opacity-80"
-                    >
-                      <i className="fa-solid fa-cart-plus mr-2"></i>Add to cart
-                    </button>
-                    <button className="bg-primary cursor-pointer rounded-md px-3.5 py-2 text-sm font-medium text-white transition-all duration-200 hover:opacity-80">
-                      Buy now
-                    </button>
-                  </div>
+                  {productData.in_stock && (
+                    <div className="border- ml-auto flex gap-3">
+                      <button
+                        onClick={handleAddToCart}
+                        className="cursor-pointer rounded-md bg-gray-400 px-3.5 py-2 text-sm font-medium text-white transition-all duration-200 hover:text-white hover:opacity-80"
+                      >
+                        <i className="fa-solid fa-cart-plus mr-2"></i>Add to
+                        cart
+                      </button>
+                      <button
+                        onClick={handleBuy}
+                        className="bg-primary cursor-pointer rounded-md px-3.5 py-2 text-sm font-medium text-white transition-all duration-200 hover:opacity-80"
+                      >
+                        Buy now
+                      </button>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>

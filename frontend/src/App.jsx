@@ -15,6 +15,7 @@ import ProtectedRoute from "./route/ProtectedRoute.jsx";
 import Product from "./pages/product/index.jsx";
 import FilteredProducts from "./pages/filtered/index.jsx";
 import ConversationPage from "./pages/conversation/index.jsx";
+import SearchPage from "./pages/searched/index.jsx";
 
 function App() {
   return (
@@ -85,6 +86,14 @@ function App() {
           element={
             <ProtectedRoute>
               <ConversationPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path={"/home/products/search/:item"}
+          element={
+            <ProtectedRoute>
+              <SearchPage />
             </ProtectedRoute>
           }
         />

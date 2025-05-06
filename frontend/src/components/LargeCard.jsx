@@ -19,7 +19,12 @@ export default function LargeCard(props) {
           </p>
         </div>
         <div className="ml-auto flex items-center gap-2 pr-2.5">
-          <p className="text-primary text-lg font-bold">₱{props.price}</p>
+          <p className="text-primary text-lg font-bold">
+            ₱
+            {props.price.length > 8
+              ? props.price.slice(0, 9) + "..."
+              : props.price}
+          </p>
         </div>
       </div>
     </div>

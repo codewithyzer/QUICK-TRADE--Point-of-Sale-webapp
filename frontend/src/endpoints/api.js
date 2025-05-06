@@ -11,6 +11,8 @@ const CART_URL = `${BASE_URL}cart/`;
 const CONVERSATIONS_URL = `${BASE_URL}conversations/`;
 const CONVERSATION_FILTER_URL = `${BASE_URL}conversations/filter/`;
 const MESSAGES_URL = `${BASE_URL}messages/`;
+const SEARCHED_URL = `${BASE_URL}products/?`;
+const NOTIFICATIONS_URL = `${BASE_URL}notifications/`;
 import { useNavigate } from "react-router-dom";
 
 export async function login(username, password) {
@@ -192,4 +194,65 @@ export async function sendAMessage(conversationId, messageText) {
   }
 }
 
+export async function searchAProduct(item) {
+  try {
+    const res = await axios.get(`${SEARCHED_URL}${item}`, {
+      withCredentials: true,
+    });
+    return res.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function updateProduct(buyer, idParam) {
+  try {
+    const res = await axios.patch(
+      `${GET_PRODUCT_URL}${idParam}/`,
+      {
+        in_stock: false,
+        bought_by: buyer,
+      },
+      { withCredentials: true },
+    );
+    return res.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function getNotifications() {
+  try {
+    const res = await axios.get(`${NOTIFICATIONS_URL}?owned_user=true`, {
+      withCredentials: true,
+    });
+    return res.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function addNotification(owner, notificationMessage) {
+  try {
+    const res = await axios.post(
+      NOTIFICATIONS_URL,
+      { notification: notificationMessage, owner_id: owner },
+      { withCredentials: true },
+    );
+    return res.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function deleteNotification(id) {
+  try {
+    const res = await axios.delete(`${NOTIFICATIONS_URL}${id}/`, {
+      withCredentials: true,
+    });
+    return res.data;
+  } catch (error) {
+    throw error;
+  }
+}
 export default BASE_URL;

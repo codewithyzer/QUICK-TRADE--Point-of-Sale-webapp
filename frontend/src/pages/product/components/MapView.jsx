@@ -24,7 +24,7 @@ export default function MapView({ lat, lng }) {
     <MapContainer
       center={[lat, lng]}
       zoom={15}
-      style={{ height: "300px", width: "100%" }}
+      style={{ height: "245px", width: "100%" }}
     >
       <TileLayer
         attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a>'

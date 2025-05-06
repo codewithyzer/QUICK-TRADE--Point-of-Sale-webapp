@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
-from .models import Product, Category, Cart, CartItem, Message, Conversation
+from .models import Product, Category, Cart, CartItem, Message, Conversation, Notification
 from rest_framework.validators import UniqueValidator
 
 
@@ -23,6 +23,11 @@ class ProductSerializer(serializers.ModelSerializer):
         source='category',
         write_only=True
     )
+    bought_by = serializers.PrimaryKeyRelatedField(
+    queryset=User.objects.all(),
+    allow_null=True,
+    required=False
+)
     class Meta:
         model = Product
         fields = '__all__'
@@ -63,3 +68,14 @@ class ConversationSerializer(serializers.ModelSerializer):
         model = Conversation
         fields = ['id', 'buyer', 'buyer_username', 'seller', 'seller_username', 'created_at', 'messages']
         read_only_fields = ['buyer']
+        
+class NotificationSerializer(serializers.ModelSerializer):
+    owner = UserSerializer(read_only=True)
+    owner_id = serializers.PrimaryKeyRelatedField(
+        queryset=User.objects.all(),
+        source='owner',
+        write_only=True
+    )
+    class Meta:
+        model = Notification
+        fields = '__all__'

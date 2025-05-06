@@ -11,10 +11,10 @@ export default function ConversationCard(props) {
       onClick={handleClick}
       className={`flex h-12 w-35 cursor-pointer items-center gap-2 rounded-md border-gray-400 bg-white px-2.5 py-1.5 transition-all duration-100 hover:border-1 ${props.selected && "border-1"}`}
     >
-      <div className="bg-thirdary flex h-7 w-7 items-center justify-center rounded-full text-white">
+      <div className="bg-thirdary flex h-7 w-7 items-center justify-center rounded-full font-semibold text-white">
         <p>{props.user.slice(0, 1).toUpperCase()}</p>
       </div>
-      <p>
+      <p className="text-primary font-medium">
         {props.user.length > 6 ? props.user.slice(0, 6) + ". . ." : props.user}
       </p>
     </div>

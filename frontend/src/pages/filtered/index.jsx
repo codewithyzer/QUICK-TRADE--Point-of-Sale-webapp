@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Header from "../../components/Header";
 import { useAuth } from "../../context/AuthContext";
-import HomeSidebar from "../home/components/HomeSidebar";
+import HomeSidebar from "./components/HomeSidebar";
 import ProductCards from "./components/ProductCards";
 import { get_products } from "../../endpoints/api";
 

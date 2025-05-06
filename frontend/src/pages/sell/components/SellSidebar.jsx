@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
-import searchIcon from "../../../assets/search.png";
 import { useNavigate } from "react-router-dom";
 import { logout } from "../../../endpoints/api";
+import SearchForm from "../../../components/SearchForm.jsx";
 
 export default function BuySidebar() {
   const navigate = useNavigate();
@@ -38,18 +38,7 @@ export default function BuySidebar() {
           <span className="text-[#153969]">Quick</span>{" "}
           <span className="text-[#87a0be]">Trade</span>
         </h1>
-        <form action="" className="mt-[20px] flex items-center">
-          <input
-            type="text"
-            id="search"
-            name="search"
-            placeholder="Search"
-            className="h-[39px] w-[200px] rounded-l-[5px] border-[3px] border-[#153969] bg-white pr-[10px] pl-[10px] font-medium text-[#153969] outline-0"
-          />
-          <button className="flex h-[39px] w-[39px] cursor-pointer items-center justify-center rounded-r-[5px] border-0 bg-[#153969] outline-0 transition-opacity duration-100">
-            <img src={searchIcon} alt="search icon" className="w-[30px]" />
-          </button>
-        </form>
+        <SearchForm />
       </div>
       <div className="font-poppins flex h-[250px] w-full flex-col items-start justify-between pl-[20px]">
         <Link to={"/home"}>

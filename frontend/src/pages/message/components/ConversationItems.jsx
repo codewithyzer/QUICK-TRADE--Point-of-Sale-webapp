@@ -22,5 +22,7 @@ export default function ConversationItems(props) {
       );
     }
   });
-  return <div className="flex gap-3">{conversationCardElements}</div>;
+  return (
+    <div className="scrollable flex gap-3 pb-3">{conversationCardElements}</div>
+  );
 }

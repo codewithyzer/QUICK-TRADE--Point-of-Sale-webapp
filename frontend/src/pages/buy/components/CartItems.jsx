@@ -27,11 +27,11 @@ export default function CartItems(props) {
           {cartItemsElements.length > 0 ? (
             cartItemsElements
           ) : (
-            <div className="relative flex h-45 w-full items-center justify-end gap-4 overflow-hidden rounded-md bg-white px-10 transition-all duration-50">
-              <p className="text-primary text-xl font-medium">Add a product</p>
+            <div className="relative flex h-45 w-full items-center justify-end gap-3 overflow-hidden rounded-md bg-white px-10 transition-all duration-50">
+              <p className="text-primary text-lg font-medium">Add a product</p>
               <button
                 onClick={handleAdd}
-                className="bg-primary duraton-150 h-15 w-15 cursor-pointer rounded-full text-white transition-all hover:opacity-70"
+                className="bg-primary duraton-150 h-12 w-12 cursor-pointer rounded-full text-white transition-all hover:opacity-70"
               >
                 <i className="fa-solid fa-plus"></i>
               </button>
