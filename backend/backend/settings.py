@@ -71,6 +71,16 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware' # add cors headers
 ]
 
+from datetime import timedelta
+
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=5),        # Your current short-lived access token
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),          # Increase this to extend the refreshed token's life
+    "ROTATE_REFRESH_TOKENS": False,                       # Optional: Set to True if you want a new refresh token each time one is used
+    "BLACKLIST_AFTER_ROTATION": True,                     # Works with ROTATE_REFRESH_TOKENS
+    # Other settings...
+}
+
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",  # Your frontend URL
 ]

@@ -28,7 +28,7 @@ export default function HomeSidebar() {
   const buttonNormalStyle =
     "active:opacity-80 flex h-[38px] w-[240px] cursor-pointer items-center justify-start rounded-[5px] border-0 pl-4 text-[0.86rem] font-medium transition-all duration-200 text-[#153969] bg-transparent hover:bg-[#153969] hover:text-white";
   return (
-    <section className="font-poppins border-thirdary fixed top-0 bottom-0 left-0 flex w-[284px] flex-col items-center border-r-1 bg-white">
+    <section className="font-poppins border-thirdary fixed top-0 bottom-0 left-0 z-20 flex w-[284px] flex-col items-center border-r-1 bg-white">
       <div className="flex w-full flex-col py-[20px] pb-[30px] pl-[20px]">
         {/* <img src={logo} alt="Company logo" className="w-30" /> */}
         <h1 className="mr-[30px] mb-[-10px] self-center text-[4rem] font-bold">
