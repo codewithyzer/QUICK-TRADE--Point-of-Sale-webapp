@@ -230,7 +230,7 @@ export default function CredentialsPage() {
                 name="valid_id"
                 accept="image/*"
                 onChange={handleChange}
-                className="input-one bg-thirdary w-full cursor-pointer rounded-md border-2 border-white px-2 py-1 text-white transition-all duration-150 outline-none hover:opacity-70"
+                className="input-one text-primary w-full cursor-pointer rounded-md border-white bg-white px-2 py-1 transition-all duration-150 outline-none hover:opacity-70"
               />
               {inputErrors.valid_id && (
                 <p

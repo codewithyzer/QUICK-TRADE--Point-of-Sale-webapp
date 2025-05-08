@@ -5,13 +5,13 @@ export default function ProductCards(props) {
     "Electronics",
     "Home Appliances",
     "Fashion",
-    "Health & Beauty",
+    "Health and Beauty",
     "Furniture",
-    "Toys & Games",
-    "Sports & Outdoors",
+    "Toys and Games",
+    "Sports and Outdoors",
     "Automotive",
     "Groceries",
-    "Book & Media",
+    "Book and Media",
   ];
 
   const categoryCards = categories.map((categoryName) => {

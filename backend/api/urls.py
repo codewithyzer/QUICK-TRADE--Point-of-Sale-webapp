@@ -14,5 +14,6 @@ urlpatterns = [
     path('messages/', views.MessageCreateView.as_view(), name='send-message'),
     path('notifications/', views.NotificationListCreateAPIView.as_view(), name='notifications-lc'),
     path('notifications/<int:pk>/', views.NotificationRetrieveUpdateDestroyAPIView.as_view(), name='notifications-rud'),
-    path('credentials/', views.CredentialListCreateAPIView.as_view(), name='credentials')
+    path('credentials/', views.CredentialListCreateAPIView.as_view(), name='credentials'),
+    path('reports/', views.ReportListCreateAPIView.as_view(), name='reports')
 ]

@@ -17,6 +17,7 @@ import FilteredProducts from "./pages/filtered/index.jsx";
 import ConversationPage from "./pages/conversation/index.jsx";
 import SearchPage from "./pages/searched/index.jsx";
 import CredentialsPage from "./pages/credentials/index.jsx";
+import ReportPage from "./pages/report/index.jsx";
 
 function App() {
   return (
@@ -95,6 +96,14 @@ function App() {
           element={
             <ProtectedRoute>
               <SearchPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path={"/home/report"}
+          element={
+            <ProtectedRoute>
+              <ReportPage />
             </ProtectedRoute>
           }
         />

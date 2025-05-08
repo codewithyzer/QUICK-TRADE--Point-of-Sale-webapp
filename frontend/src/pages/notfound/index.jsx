@@ -9,7 +9,7 @@ export default function NotFoundPage() {
       </h1>
       <Link to={"/home"}>
         <button className="mt-[15px] cursor-pointer rounded-[10px] border-none bg-gradient-to-br from-[#718bab] to-[#153969] px-[23px] py-[6px] text-[1.3rem] text-white shadow-md transition-all duration-200 hover:opacity-80">
-          Back Home
+          Go back
         </button>
       </Link>
     </section>

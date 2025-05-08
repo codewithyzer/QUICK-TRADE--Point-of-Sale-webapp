@@ -13,6 +13,7 @@ const CONVERSATION_FILTER_URL = `${BASE_URL}conversations/filter/`;
 const MESSAGES_URL = `${BASE_URL}messages/`;
 const SEARCHED_URL = `${BASE_URL}products/?`;
 const NOTIFICATIONS_URL = `${BASE_URL}notifications/`;
+const REPORTS_URL = `${BASE_URL}reports/`;
 import { useNavigate } from "react-router-dom";
 
 export async function login(username, password) {
@@ -251,6 +252,18 @@ export async function deleteNotification(id) {
       withCredentials: true,
     });
     return res.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function sendReport(message) {
+  try {
+    await axios.post(
+      REPORTS_URL,
+      { report: message },
+      { withCredentials: true },
+    );
   } catch (error) {
     throw error;
   }

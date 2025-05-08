@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
-from .models import Product, Category, Cart, CartItem, Message, Conversation, Notification, Credential
+from .models import Product, Category, Cart, CartItem, Message, Conversation, Notification, Credential, Report
 from rest_framework.validators import UniqueValidator
 from django.contrib.auth import get_user_model
 
@@ -113,3 +113,10 @@ class CredentialSerializer(serializers.ModelSerializer):
 
         validated_data['owner'] = user
         return super().create(validated_data)
+    
+class ReportSerializer(serializers.ModelSerializer):
+    owner = UserSerializer(read_only=True)
+    class Meta:
+        model = Report
+        fields = '__all__'
+        read_only_fields = ['id', 'timestamp']

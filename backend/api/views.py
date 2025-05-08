@@ -19,8 +19,8 @@ from rest_framework.views import APIView
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import SearchFilter, OrderingFilter
 
-from .models import Product, Cart, CartItem, Conversation, Message, Notification, Credential
-from .serializers import ProductSerializer, UserSerializer, CartSerializer, CartItemSerializer, ConversationSerializer, MessageSerializer, NotificationSerializer, CredentialSerializer
+from .models import Product, Cart, CartItem, Conversation, Message, Notification, Credential, Report
+from .serializers import ProductSerializer, UserSerializer, CartSerializer, CartItemSerializer, ConversationSerializer, MessageSerializer, NotificationSerializer, CredentialSerializer, ReportSerializer
 from .filters import ProductFilter, NotificationFilter
 
 from rest_framework.permissions import AllowAny
@@ -226,3 +226,11 @@ class CredentialListCreateAPIView(ListCreateAPIView):
     queryset = Credential.objects.all()
     serializer_class = CredentialSerializer
     permission_classes = [AllowAny]
+    
+class ReportListCreateAPIView(ListCreateAPIView):
+    queryset = Report.objects.all()
+    serializer_class = ReportSerializer
+    permission_classes = [IsAuthenticated]
+    
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)

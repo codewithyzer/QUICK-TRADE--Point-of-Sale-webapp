@@ -221,7 +221,7 @@ export default function Product() {
                   Meetup preferences
                 </p>
                 <div className="flex flex-col">
-                  <div className="overflow-hidden rounded-md">
+                  <div className="z-1 overflow-hidden rounded-md">
                     <MapView
                       lat={productData.meetup_lat}
                       lng={productData.meetup_lng}

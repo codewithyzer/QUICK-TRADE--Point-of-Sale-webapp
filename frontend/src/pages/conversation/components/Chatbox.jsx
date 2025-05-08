@@ -78,7 +78,7 @@ export default function Chatbox(props) {
           placeholder="Type your message here . . . "
         />
         <button className="bg-primary flex w-2/9 cursor-pointer items-center justify-center rounded-md px-5 font-medium text-white transition-all duration-150 hover:opacity-70">
-          Send Message
+          Send Message <i className="fa-solid fa-paper-plane ml-2"></i>
         </button>
       </form>
     </div>

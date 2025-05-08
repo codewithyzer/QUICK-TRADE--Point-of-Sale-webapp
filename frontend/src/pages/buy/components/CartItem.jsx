@@ -14,6 +14,7 @@ export default function CartItem(props) {
   const [isRemoved, setIsRemoved] = useState(false);
   const [isFadingOut, setIsFadingOut] = useState(false);
   const [filteredConversation, setFilteredConversation] = useState({});
+  const [buyError, setBuyError] = useState(false);
   const nav = useNavigate();
 
   useEffect(() => {
@@ -60,25 +61,33 @@ export default function CartItem(props) {
   async function handleBuy() {
     try {
       await updateProduct(user.id, props.product.id);
-      await addNotification(
-        props.product.owner.id,
-        `${user.username} just bought your product "${props.product.name.toUpperCase()}".`,
-      );
       if (props.product.in_stock) {
+        try {
+          await sendAMessage(
+            filteredConversation.id,
+            `Automatic Message: I bought your product "${props.product.name}"`,
+          );
+          await addNotification(
+            props.product.owner.id,
+            `${user.username} just bought your product "${props.product.name.toUpperCase()}".`,
+          );
+        } catch (error) {
+          console.error(error);
+        }
         window.location.reload();
         handleRemove();
       } else {
-        console.log("Product already bought!");
+        setBuyError(true);
+
+        setTimeout(() => {
+          setIsFadingOut(true);
+        }, 5000);
+
+        setTimeout(() => {
+          setBuyError(false);
+          setIsFadingOut(false);
+        }, 5250);
       }
-    } catch (error) {
-      console.error(error);
-    }
-    try {
-      const data = await sendAMessage(
-        filteredConversation.id,
-        `Automatic Message: I bought your product "${props.product.name}"`,
-      );
-      console.log(data);
     } catch (error) {
       console.error(error);
     }
@@ -86,6 +95,14 @@ export default function CartItem(props) {
 
   return (
     <>
+      {((buyError && !props.product.in_stock) || isFadingOut) && (
+        <div
+          className={`${isFadingOut ? "fade-out" : "fade-in"} fixed right-5 bottom-5 w-65 rounded-md bg-red-400 p-5 text-sm font-medium text-white`}
+        >
+          <i className="fa-solid fa-circle-exclamation mr-2"></i>Sorry but this
+          product is already bought by someone.
+        </div>
+      )}
       <div className="relative flex h-45 w-full gap-3 overflow-hidden rounded-md bg-white transition-all duration-50">
         <button
           onClick={handleShowCheck}
@@ -144,14 +161,6 @@ export default function CartItem(props) {
           </div>
         </div>
       </div>
-      {(isRemoved || isFadingOut) && (
-        <div
-          className={`${isFadingOut ? "fade-out" : "fade-in"} font-poppins fixed right-5 bottom-5 z-20 rounded-lg bg-green-400 p-5 text-sm font-medium text-white`}
-        >
-          <i className="fa-solid fa-circle-check mr-2"></i>Product removed
-          succesfully
-        </div>
-      )}
     </>
   );
 }

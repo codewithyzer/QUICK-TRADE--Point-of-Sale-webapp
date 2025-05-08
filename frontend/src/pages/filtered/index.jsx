@@ -9,6 +9,7 @@ import { get_products } from "../../endpoints/api";
 export default function FilteredProducts() {
   const { user } = useAuth();
   const { category } = useParams();
+  console.log(category);
   const [filteredProducts, setFilteredProducts] = useState([]);
   console.log(filteredProducts);
 
@@ -28,7 +29,7 @@ export default function FilteredProducts() {
 
   return (
     <>
-      <Header user={user.username} />
+      <Header user={user} />
       <HomeSidebar />
       <main className="font-poppins mt-[70px] ml-[284px] flex flex-col gap-6 bg-gray-100 p-8">
         <div className="flex flex-col gap-15">

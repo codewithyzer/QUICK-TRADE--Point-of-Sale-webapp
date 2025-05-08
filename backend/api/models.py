@@ -41,7 +41,7 @@ class Product(models.Model):
     image = models.ImageField(upload_to='product_images/', default='product_images/No Product Image.svg')
     
     def __str__(self):
-        return self.name
+        return f"{self.owner.username} - {self.name}"
     
 class Cart(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="cart")
@@ -118,4 +118,15 @@ class Credential(models.Model):
     def __str__(self):
         return f"{self.owner.username} - {self.owner.email}"
     
+class Report(models.Model):
+    owner = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name='report'
+    )
+    timestamp = models.DateField(auto_now_add=True)
+    report = models.TextField()
+    
+    def __str__(self):
+        return f"{self.owner.username} - report"
     

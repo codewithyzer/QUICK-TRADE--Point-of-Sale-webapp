@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function FilterProducts() {
   const [category, setCategory] = useState("Electronics");
+  console.log(category);
   const nav = useNavigate();
 
   function handleChange(event) {
@@ -32,13 +33,13 @@ export default function FilterProducts() {
           <option value="Electronics">Electronics</option>
           <option value="Home Appliances">Home Appliances</option>
           <option value="Fashion">Fashion</option>
-          <option value="Health & Beauty">Health & Beauty</option>
+          <option value="Health and Beauty">Health & Beauty</option>
           <option value="Furniture">Furniture</option>
-          <option value="Toys & Games">Toys & Games</option>
-          <option value="Sports & Outdoors">Sports & Outdoors</option>
+          <option value="Toys and Games">Toys & Games</option>
+          <option value="Sports and Outdoors">Sports & Outdoors</option>
           <option value="Automotive">Automotive</option>
           <option value="Groceries">Groceries</option>
-          <option value="Book & Media">Book & Media</option>
+          <option value="Book and Media">Book & Media</option>
         </select>
       </div>
       <button className="border-primary text-primary hover:bg-primary h-full cursor-pointer rounded-lg border-1 px-10 text-[0.8rem] font-medium transition-all duration-200 hover:text-white">
