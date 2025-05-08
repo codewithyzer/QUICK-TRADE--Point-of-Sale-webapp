@@ -12,6 +12,9 @@ from .serializers import UserRegistrationSerializer
 class UserRegisterListCreateAPIView(CreateAPIView):
     serializer_class = UserRegistrationSerializer
     permission_classes = [AllowAny]
-    
+
+    def perform_create(self, serializer):
+        serializer.save(is_active=False)
+
     def post(self, request, *args, **kwargs):
         return self.create(request, *args, **kwargs)

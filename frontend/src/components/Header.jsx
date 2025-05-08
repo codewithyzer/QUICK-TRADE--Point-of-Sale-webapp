@@ -7,7 +7,7 @@ export default function Header(props) {
         to={"/profile"}
         className="text-[0.95rem] font-semibold text-[#153969]"
       >
-        {props.user.username}
+        {props.user?.username}
       </Link>
     </header>
   );

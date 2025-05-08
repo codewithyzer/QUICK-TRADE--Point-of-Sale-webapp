@@ -13,5 +13,6 @@ urlpatterns = [
     path('conversations/filter/', views.ConversationFilterView.as_view(), name='conversation-filter'),
     path('messages/', views.MessageCreateView.as_view(), name='send-message'),
     path('notifications/', views.NotificationListCreateAPIView.as_view(), name='notifications-lc'),
-    path('notifications/<int:pk>/', views.NotificationRetrieveUpdateDestroyAPIView.as_view(), name='notifications-rud')
+    path('notifications/<int:pk>/', views.NotificationRetrieveUpdateDestroyAPIView.as_view(), name='notifications-rud'),
+    path('credentials/', views.CredentialListCreateAPIView.as_view(), name='credentials')
 ]

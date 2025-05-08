@@ -1,8 +1,8 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
-from .models import Product, Category, Cart, CartItem, Message, Conversation, Notification
+from .models import Product, Category, Cart, CartItem, Message, Conversation, Notification, Credential
 from rest_framework.validators import UniqueValidator
-
+from django.contrib.auth import get_user_model
 
 class UserSerializer(serializers.ModelSerializer):
     date_joined = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S")
@@ -79,3 +79,37 @@ class NotificationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Notification
         fields = '__all__'
+        
+User = get_user_model()
+
+class CredentialSerializer(serializers.ModelSerializer):
+    owner = serializers.SerializerMethodField(read_only=True)
+    username = serializers.CharField(write_only=True)
+    email = serializers.EmailField(write_only=True)
+
+    class Meta:
+        model = Credential
+        fields = [
+            'id', 'owner', 'username', 'email', 'valid_id',
+            'first_name', 'last_name', 'sex', 'address', 'contact_number'
+        ]
+        read_only_fields = ['id', 'owner']
+
+    def get_owner(self, obj):
+        return {
+            "id": obj.owner.id,
+            "username": obj.owner.username,
+            "email": obj.owner.email,
+        }
+
+    def create(self, validated_data):
+        username = validated_data.pop('username')
+        email = validated_data.pop('email')
+
+        try:
+            user = User.objects.get(username=username, email=email)
+        except User.DoesNotExist:
+            raise serializers.ValidationError("User with given username and email does not exist.")
+
+        validated_data['owner'] = user
+        return super().create(validated_data)

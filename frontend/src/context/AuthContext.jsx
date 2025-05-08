@@ -56,13 +56,13 @@ export default function AuthProvider({ children }) {
 
   const login_user = async (username, password) => {
     const response = await login(username, password);
+    console.log(response);
     if (response.success) {
       await checkAuth();
       setAuthenticated(true);
       navigate("/home");
     } else {
       navigate("/signin/status");
-      // alert("Login failed. Please check your credentials.");
     }
   };
 

@@ -90,3 +90,32 @@ class Notification(models.Model):
         related_name='owned_notifications'
     )
     timestamp = models.DateTimeField(auto_now_add=True)
+    
+class Sex(models.Model):
+    name = models.CharField(max_length=155, unique=True)
+    
+    def __str__(self):
+        return self.name
+    
+class Credential(models.Model):
+    owner = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name='owned_credential'
+    )
+    valid_id = models.ImageField(upload_to='valid_ids/')
+    first_name = models.CharField(max_length=255, blank=False)
+    last_name = models.CharField(max_length=255, blank=False)
+    sex = models.ForeignKey(
+        Sex,
+        on_delete=models.SET_NULL,
+        null=True,
+        related_name='credential'
+    )
+    address = models.TextField()
+    contact_number = models.CharField(max_length=15)
+    
+    def __str__(self):
+        return f"{self.owner.username} - {self.owner.email}"
+    
+    

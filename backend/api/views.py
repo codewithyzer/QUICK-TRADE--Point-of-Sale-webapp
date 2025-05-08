@@ -19,9 +19,11 @@ from rest_framework.views import APIView
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import SearchFilter, OrderingFilter
 
-from .models import Product, Cart, CartItem, Conversation, Message, Notification
-from .serializers import ProductSerializer, UserSerializer, CartSerializer, CartItemSerializer, ConversationSerializer, MessageSerializer, NotificationSerializer
+from .models import Product, Cart, CartItem, Conversation, Message, Notification, Credential
+from .serializers import ProductSerializer, UserSerializer, CartSerializer, CartItemSerializer, ConversationSerializer, MessageSerializer, NotificationSerializer, CredentialSerializer
 from .filters import ProductFilter, NotificationFilter
+
+from rest_framework.permissions import AllowAny
 
 from rest_framework import serializers
 
@@ -219,3 +221,8 @@ class NotificationRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
     permission_classes = [IsAuthenticated]
     filter_backends = [DjangoFilterBackend]
     filterset_class = NotificationFilter
+    
+class CredentialListCreateAPIView(ListCreateAPIView):
+    queryset = Credential.objects.all()
+    serializer_class = CredentialSerializer
+    permission_classes = [AllowAny]

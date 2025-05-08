@@ -70,16 +70,24 @@ export default function SignupPage() {
         requestOptions,
       );
       const data = await response.json();
+
       setFormData({
         username: "",
         email: "",
         password: "",
       });
 
-      console.log(data);
-
       if (typeof data.username === "string") {
-        navigate("/signup/status");
+        localStorage.setItem(
+          "signupUser",
+          JSON.stringify({
+            username: data.username,
+            email: data.email,
+          }),
+        );
+        navigate("/signup/status", {
+          state: { username: data.username, email: data.email },
+        });
       } else {
         setInputErrors((prevErrors) => {
           const newErrors = { ...prevErrors };

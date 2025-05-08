@@ -14,10 +14,11 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
         return value
 
     def create(self, validated_data):
-        # Create the user and set the password
         user = User.objects.create_user(
-            username=validated_data['username'],
-            email=validated_data['email'],
-            password=validated_data['password']
-        )
+        username=validated_data['username'],
+        email=validated_data['email'],
+        password=validated_data['password']
+    )
+        user.is_active = False  # deactivate user upon registration
+        user.save()
         return user

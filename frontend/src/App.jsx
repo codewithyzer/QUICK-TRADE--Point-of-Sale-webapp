@@ -16,6 +16,7 @@ import Product from "./pages/product/index.jsx";
 import FilteredProducts from "./pages/filtered/index.jsx";
 import ConversationPage from "./pages/conversation/index.jsx";
 import SearchPage from "./pages/searched/index.jsx";
+import CredentialsPage from "./pages/credentials/index.jsx";
 
 function App() {
   return (
@@ -99,6 +100,7 @@ function App() {
         />
         <Route path={"/signup/status"} element={<SignupStatus />} />
         <Route path={"/signin/status"} element={<SigninStatus />} />
+        <Route path={"/signup/credentials"} element={<CredentialsPage />} />
       </Routes>
     </>
   );
