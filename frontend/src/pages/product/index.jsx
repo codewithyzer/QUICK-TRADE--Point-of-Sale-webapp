@@ -21,6 +21,8 @@ export default function Product() {
   const [addToCartFail, setAddToCartFail] = useState(false);
   const [isFadingOut1, setIsFadingOut1] = useState(false);
   const [isFadingOut2, setIsFadingOut2] = useState(false);
+  const [isConfirmBuy, setIsConfirmBuy] = useState(false);
+  const [isConfirmCart, setIsConfirmCart] = useState(false);
   const [productData, setProductData] = useState({});
   const [filteredConversation, setFilteredConversation] = useState({});
 
@@ -61,6 +63,7 @@ export default function Product() {
 
   async function handleAddToCart() {
     try {
+      setIsConfirmCart(false);
       const data = await addToCart(id);
       setAddToCartSuccess(true);
 
@@ -113,7 +116,56 @@ export default function Product() {
     <>
       <Header user={user} />
       <BuySidebar />
-      <main className="font-poppins mt-[70px] ml-[284px] flex h-full gap-6 bg-gray-100 p-8">
+      {isConfirmBuy && (
+        <div className="font-poppins fixed top-70 right-110 z-20 flex items-center justify-center">
+          <div className="text-primary flex flex-col gap-5 rounded-md border-1 border-gray-400 bg-white px-15 py-15">
+            <h1 className="w-80 text-center text-2xl font-semibold">
+              Are you sure you want to buy this product?{" "}
+            </h1>
+            <div className="flex justify-center gap-5">
+              <button
+                onClick={() => setIsConfirmBuy(false)}
+                className="trynsition-all cursor-pointer rounded-md bg-red-400 px-8 py-1 font-medium text-white duration-150 hover:opacity-70"
+              >
+                No
+              </button>
+              <button
+                onClick={handleBuy}
+                className="cursor-pointer rounded-md bg-green-400 px-8 py-1 font-medium text-white transition-all duration-150 hover:opacity-70"
+              >
+                Yes
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {isConfirmCart && (
+        <div className="font-poppins fixed top-70 right-110 z-20 flex items-center justify-center">
+          <div className="text-primary flex flex-col gap-5 rounded-md border-1 border-gray-400 bg-white px-20 py-15">
+            <h1 className="w-80 text-center text-2xl font-semibold">
+              Are you sure you want to add this product to your cart?{" "}
+            </h1>
+            <div className="flex justify-center gap-5">
+              <button
+                onClick={() => setIsConfirmCart(false)}
+                className="trynsition-all cursor-pointer rounded-md bg-red-400 px-8 py-1 font-medium text-white duration-150 hover:opacity-70"
+              >
+                No
+              </button>
+              <button
+                onClick={handleAddToCart}
+                className="cursor-pointer rounded-md bg-green-400 px-8 py-1 font-medium text-white transition-all duration-150 hover:opacity-70"
+              >
+                Yes
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+      <main
+        className={`${(isConfirmBuy || isConfirmCart) && "pointer-events-none blur-xs"} not-first:font-poppins mt-[70px] ml-[284px] flex h-full gap-6 bg-gray-100 p-8`}
+      >
         {Object.keys(productData).length > 0 ? (
           <>
             <div className="flex w-1/2 flex-col gap-4 rounded-md">
@@ -180,14 +232,14 @@ export default function Product() {
                   {productData.in_stock && (
                     <div className="border- ml-auto flex gap-3">
                       <button
-                        onClick={handleAddToCart}
+                        onClick={() => setIsConfirmCart(true)}
                         className="cursor-pointer rounded-md bg-gray-400 px-3.5 py-2 text-sm font-medium text-white transition-all duration-200 hover:text-white hover:opacity-80"
                       >
                         <i className="fa-solid fa-cart-plus mr-2"></i>Add to
                         cart
                       </button>
                       <button
-                        onClick={handleBuy}
+                        onClick={() => setIsConfirmBuy(true)}
                         className="bg-primary cursor-pointer rounded-md px-3.5 py-2 text-sm font-medium text-white transition-all duration-200 hover:opacity-80"
                       >
                         Buy now

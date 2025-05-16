@@ -194,7 +194,7 @@ export default function CredentialsPage() {
       )}
 
       <main
-        className={`${isConfirm && "pointer-events-none blur-sm"} fade-in font-poppins mx-auto my-[120px] flex w-fit justify-center rounded-[20px] shadow-md`}
+        className={`${isConfirm && "pointer-events-none blur-xs"} fade-in font-poppins mx-auto my-[120px] flex w-fit justify-center rounded-[20px] shadow-md`}
       >
         <div className="flex w-[380px] flex-col items-center justify-center rounded-l-[20px] bg-[#f5f5f5]">
           <h1 className="signup-qt">

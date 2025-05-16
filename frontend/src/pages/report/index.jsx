@@ -9,6 +9,7 @@ export default function ReportPage() {
   const [message, setMessage] = useState("");
   const [submitStatus, setSubmitStatus] = useState("");
   const [isSuccess, setIsSuccess] = useState(false);
+  const [isConfirm, setIsConfirm] = useState(false);
   const [isFail, setIsFail] = useState(false);
   const [isFadingOut1, setIsFadingOut1] = useState(false);
   const [isFadingOut2, setIsFadingOut2] = useState(false);
@@ -19,6 +20,7 @@ export default function ReportPage() {
   }
 
   async function handleSubmit(event) {
+    setIsConfirm(false);
     event.preventDefault();
 
     try {
@@ -58,6 +60,30 @@ export default function ReportPage() {
     <>
       <HomeSidebar />
       <Header user={user} />
+
+      {isConfirm && (
+        <div className="font-poppins fixed top-70 right-110 z-20 flex items-center justify-center">
+          <div className="text-primary flex flex-col gap-5 rounded-md border-1 border-gray-400 bg-white px-15 py-15">
+            <h1 className="w-80 text-center text-2xl font-semibold">
+              Are you sure you want to submit this report?{" "}
+            </h1>
+            <div className="flex justify-center gap-5">
+              <button
+                onClick={() => setIsConfirm(false)}
+                className="trynsition-all cursor-pointer rounded-md bg-red-400 px-8 py-1 font-medium text-white duration-150 hover:opacity-70"
+              >
+                No
+              </button>
+              <button
+                onClick={handleSubmit}
+                className="cursor-pointer rounded-md bg-green-400 px-8 py-1 font-medium text-white transition-all duration-150 hover:opacity-70"
+              >
+                Yes
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
       {(isSuccess || isFadingOut1) && (
         <div
           className={`${isFadingOut1 ? "fade-out" : "fade-in"} fixed right-5 bottom-5 z-2 rounded-md bg-green-400 p-5 font-medium text-white`}
@@ -74,11 +100,18 @@ export default function ReportPage() {
           {submitStatus}
         </div>
       )}
-      <div className=""></div>
-      <main className="font-poppins mt-[70px] ml-[284px] flex min-h-screen flex-col gap-6 bg-gray-100 p-8">
+      <main
+        className={`${isConfirm && "pointer-events-none blur-xs"} font-poppins mt-[70px] ml-[284px] flex min-h-screen flex-col gap-6 bg-gray-100 p-8`}
+      >
         <h1 className="text-primary text-2xl font-semibold">Send a report</h1>
         <div className="flex w-full gap-10">
-          <form onSubmit={handleSubmit} className="relative w-1/2">
+          <form
+            onSubmit={(event) => {
+              event.preventDefault();
+              setIsConfirm(true);
+            }}
+            className="relative w-1/2"
+          >
             <textarea
               value={message}
               onChange={handleChange}
@@ -86,7 +119,7 @@ export default function ReportPage() {
               className="text-primary max-h-130 min-h-130 max-w-150 min-w-150 rounded-md border-1 border-gray-300 bg-white p-3 font-normal outline-none"
             ></textarea>
             <button className="bg-primary absolute right-1 bottom-7 cursor-pointer rounded-md px-4 py-1 text-white transition-all duration-150 hover:opacity-70">
-              Submit report<i className="fa-solid fa-file ml-2"></i>
+              Submit<i className="fa-solid fa-file ml-2"></i>
             </button>
           </form>
           <div className="thirdary-yellow-500 text-primary rounded-md border-l-4 bg-white p-6 text-sm shadow">

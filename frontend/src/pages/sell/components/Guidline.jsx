@@ -1,10 +1,10 @@
 export default function Guidline(props) {
   return (
-    <ul className="text-thirdary font-sm mt-2 mb-[-0.5rem] text-[0.75rem]/5">
-      <h2 className="text-thirdary text-[0.9rem] font-medium">
+    <ul className="font-sm mt-2 mb-[-0.5rem] text-[0.75rem]/5">
+      <h2 className="text-[0.9rem] font-medium text-green-400">
         <i className="fa-solid fa-bag-shopping"></i> Product Upload Guidelines
       </h2>
-      <p className="mb-2 font-medium">
+      <p className="mb-2 font-medium text-green-400">
         Please follow these instructions when uploading a product:
       </p>
       <li>
@@ -33,12 +33,12 @@ export default function Guidline(props) {
       </li>
 
       <li>
-        <div className="mt-4.5 flex">
+        <div className="mt-4.5 flex text-green-400">
           <input
             onChange={props.changeCheckbox}
             value={props.checkboxStatus}
             type="checkbox"
-            className="accent-thirdary mr-1"
+            className="accent-thirdary mr-1 cursor-pointer border-green-400"
           />
           <p>I have read and accepted the product upload terms & conditions</p>
         </div>
